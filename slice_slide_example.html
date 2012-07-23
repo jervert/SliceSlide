@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Slideshow con Jquery</title>
+
+<link rel="stylesheet" href="assets/SL_CSS_slide_v4.css" type="text/css" media="all" />
+<script src="assets/SL_JS_jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="assets/SL_JS_underscore.js" type="text/javascript"></script>
+<script src="assets/SL_JS_jquery_slideshow.js" type="text/javascript"></script>
+
+</head>
+
+<!--
+01 - 3899571049_57a733bba3_o.jpg - http://www.flickr.com/photos/deniscollette/3899571049/ - ... retour du Nord ...!!!
+02 - 5661878892_15fba42846_o.jpg - http://www.flickr.com/photos/asphericlens/5661878892/ - rapeseed and the tree
+03 - 4124824300_0938532351_o.jpg - http://www.flickr.com/photos/powi/4124824300/ - Falltime in the park
+04 - 3202687733_a141edef0a_o.jpg - http://www.flickr.com/photos/glenn-in-japan/3202687733/ - Hirosaki Castle Winter
+05 - 4654423909_f55ac359fa_o.jpg - http://www.flickr.com/photos/21680590@N06/4654423909/ - ✽ marguerites ✽ daisies ✽
+06 - 3480169658_5dcef4b04c_o.jpg - http://www.flickr.com/photos/mladjenovic_n/3480169658/ - 354 Red Sunset-Bourgogne
+07 - 2967568397_61f8bf334d_z.jpg - http://www.flickr.com/photos/dexxus/2967568397/in/photostream/ - bridge
+08 - 2124974400_2a3d06bcc7_b.jpg - http://www.flickr.com/photos/12798188@N05/2124974400/ - Mount Fitz Roy
+09 - 3482749224_43d708a1cd_o.jpg - http://www.flickr.com/photos/ecstaticist/3482749224/ - On the Lip
+10 - 3715569167_7e978e8319_b.jpg - http://www.flickr.com/photos/klallier/3715569167/ - Wheat Field
+
+-->
+
+<body>
+
+<div id="page-container">
+	<header id="page-header">
+		<h1>Slice Slides (with Jquery &amp; Underscore)</h1>
+		<nav><p><a href="http://blog.outbook.es/desarrollo-web/javascript-carrusel-slideshow-con-jquery">Volver a outbook</a></p></nav>
+		<!--nav>
+			<h2 class="indented">Ir a:</h2>
+			<ul>
+				<li><a href="#">Versión Prototype</a></li>
+				<li><a href="#">Artículo en Outbook</a></li>
+			</ul>
+		</nav-->
+	</header>
+	
+	<div id="page-body">
+	
+	
+	<article>
+		<h2>Slice Slides Example</h2>
+		
+		<pre><code>&lt;div class=&quot;slides&quot;&gt;
+  &lt;article class=&quot;slide&quot;&gt;[...]&lt;/article&gt;
+  &lt;article class=&quot;slide&quot;&gt;[...]&lt;/article&gt;
+  [Resto de slides]
+&lt;/div&gt;</code></pre>
+		
+		<section class="area-example">
+			<h3>Una imagen por slide</h3>
+			
+			<div class="slides slice-slides-1" data-slice-slide-box>
+				
+				
+				<article class="slide" data-slice-slide>
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/deniscollette/3899571049/">... retour du Nord ...!!!</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/deniscollette/3899571049/"><img src="images/slide_01_01.jpg" alt="Ampliar imagen de retour du Nord" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>... back from the North ...!!!</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by-nc-nd/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide" data-slice-slide>
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/asphericlens/5661878892/">rapeseed and the tree</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/asphericlens/5661878892/"><img src="images/slide_01_02.jpg" alt="Ampliar imagen de rapeseed and the tree" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Campo amarillo</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by-nc-sa/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide" data-slice-slide>
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/powi/4124824300/">Falltime in the park</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/powi/4124824300/"><img src="images/slide_01_03.jpg" alt="Ampliar imagen de Falltime in the park" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Otoño en el parque</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide" data-slice-slide>
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/glenn-in-japan/3202687733/">Castillo Hirosaki</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/glenn-in-japan/3202687733/"><img src="images/slide_01_04.jpg" alt="Ampliar imagen de Castillo Hirosaki" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Construido en 1611 por el clan Tsugaru. Destruido en 1627 y reconstruido en 1810.</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide" data-slice-slide>
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/21680590@N06/4654423909/">Margaritas</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/21680590@N06/4654423909/"><img src="images/slide_01_05.jpg" alt="Ampliar imagen de Margaritas" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Margaritas al sol.</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by-nd/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide" data-slice-slide>
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/mladjenovic_n/3480169658/">Atardecer rojo</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/mladjenovic_n/3480169658/"><img src="images/slide_01_06.jpg" alt="Ampliar imagen de Atardecer rojo" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Silueta de árbol en un atardecer rojo</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by-nc-nd/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide" data-slice-slide>
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/dexxus/2967568397/in/photostream/">Puente</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/dexxus/2967568397/in/photostream/"><img src="images/slide_01_07.jpg" alt="Ampliar imagen de Puente" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Puente en los alrededores de Toronto</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide" data-slice-slide>
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/12798188@N05/2124974400/">Monte Fitz Roy</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/12798188@N05/2124974400/"><img src="images/slide_01_08.jpg" alt="Ampliar imagen de Monte Fitz Roy" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>El Chalten - Santa Cruz - Argentina</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by-nc-nd/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide" data-slice-slide>
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/ecstaticist/3482749224/">Pétalo</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/ecstaticist/3482749224/"><img src="images/slide_01_09.jpg" alt="Ampliar imagen de Pétalo" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Detalle de pétalo</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by-nc-sa/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide" data-slice-slide>
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/klallier/3715569167/">Campo de trigo</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/klallier/3715569167/"><img src="images/slide_01_10.jpg" alt="Ampliar imagen de Campo de trigo" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Vista de un campo de trigo</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				
+			</div>
+		</section>
+		
+		
+		
+		
+		
+		
+		
+		<!--section class="area-example">
+			<h3>Dos imágenes por slide</h3>
+			
+			<div class="slides slides-2">
+				
+				
+				<article class="slide">
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/deniscollette/3899571049/">... retour du Nord ...!!!</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/deniscollette/3899571049/"><img src="images/slide_02_01.jpg" alt="Ampliar imagen de retour du Nord" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>... back from the North ...!!!</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by-nc-nd/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide">
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/asphericlens/5661878892/">rapeseed and the tree</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/asphericlens/5661878892/"><img src="images/slide_02_02.jpg" alt="Ampliar imagen de rapeseed and the tree" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Campo amarillo</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by-nc-sa/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide">
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/powi/4124824300/">Falltime in the park</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/powi/4124824300/"><img src="images/slide_02_03.jpg" alt="Ampliar imagen de Falltime in the park" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Otoño en el parque</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide">
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/glenn-in-japan/3202687733/">Castillo Hirosaki</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/glenn-in-japan/3202687733/"><img src="images/slide_02_04.jpg" alt="Ampliar imagen de Castillo Hirosaki" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Construido en 1611 por el clan Tsugaru. Destruido en 1627 y reconstruido en 1810.</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide">
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/21680590@N06/4654423909/">Margaritas</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/21680590@N06/4654423909/"><img src="images/slide_02_05.jpg" alt="Ampliar imagen de Margaritas" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Margaritas al sol.</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by-nd/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide">
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/mladjenovic_n/3480169658/">Atardecer rojo</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/mladjenovic_n/3480169658/"><img src="images/slide_02_06.jpg" alt="Ampliar imagen de Atardecer rojo" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Silueta de árbol en un atardecer rojo</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by-nc-nd/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide">
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/dexxus/2967568397/in/photostream/">Puente</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/dexxus/2967568397/in/photostream/"><img src="images/slide_02_07.jpg" alt="Ampliar imagen de Puente" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Puente en los alrededores de Toronto</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide">
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/12798188@N05/2124974400/">Monte Fitz Roy</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/12798188@N05/2124974400/"><img src="images/slide_02_08.jpg" alt="Ampliar imagen de Monte Fitz Roy" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>El Chalten - Santa Cruz - Argentina</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by-nc-nd/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide">
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/ecstaticist/3482749224/">Pétalo</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/ecstaticist/3482749224/"><img src="images/slide_02_09.jpg" alt="Ampliar imagen de Pétalo" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Detalle de pétalo</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by-nc-sa/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				<article class="slide">
+					<header class="slide-header">
+						<h4 class="slide-title"><a href="http://www.flickr.com/photos/klallier/3715569167/">Campo de trigo</a></h4>
+					</header>
+					<div class="slide-image">
+						<p><a href="http://www.flickr.com/photos/klallier/3715569167/"><img src="images/slide_02_10.jpg" alt="Ampliar imagen de Campo de trigo" /></a></p>
+					</div>
+					<div class="slide-description">
+						<div class="slide-text">
+							<p>Vista de un campo de trigo</p>
+						</div>
+						<footer class="slide-license">
+							<p><a href="http://creativecommons.org/licenses/by/2.0/deed.en">Licencia Creative Commons</a></p>
+						</footer>
+					</div>
+				</article>
+				
+				
+			</div>
+		</section-->
+	</article>
+	
+	</div>
+	
+	<footer id="page-footer">
+		<h2 class="indented">Información de la página</h2>
+		<p>&copy; 2012 Outbook</p>
+	</footer>
+	
+</div>
+
+
+</body>
+</html>

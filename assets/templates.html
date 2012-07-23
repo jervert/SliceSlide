@@ -1,0 +1,28 @@
+<script type="text/template" id="slice-slide-controls">
+	<div class="slide-controls" data-slice-slide-controls>
+		<nav>
+			<p><a class="slide-pause-or-resume" href="#" data-slice-slide-controls-pause-resume><span data-slice-slide-playing>Pausar</span></a><span class="indented">Ir a:</span></p>
+			<ul>
+				<li class="slide-control-previous"><a href="#" data-destination77="#jquery-slide-1-10" data-slice-slide-controls-prev><img src="assets/SL_IMG_controls_previous.png" alt="Anterior"></a></li>
+				<li class="slide-control-next"><a href="#" data-destination77="#jquery-slide-1-2" data-slice-slide-controls-next><img src="assets/SL_IMG_controls_next.png" alt="Siguiente"></a></li>
+			</ul>
+			<ul class="clear">
+			[[ _.each(slides, function (slide, index) { ]]
+				[[ var indexSum = index + 1; ]]
+				<li class="slide-control-element[[ if (index === 0) { ]] slice-slide-active[[ } ]]" data-slice-slide-controls-fixed><a href="#" data-slice-slide-destination="#{{id}}-{{indexSum}}">{{indexSum}}</a></li>
+			[[ }); ]]
+			</ul>
+		</nav>
+	</div>
+</script>
+
+<script type="text/template" id="slice-slide-controls-playing">
+	<span data-slice-slide-playing>Pausar</span>
+</script>
+<script type="text/template" id="slice-slide-controls-paused">
+	<span data-slice-slide-paused>Continuar</span>
+</script>
+
+<script type="text/template" id="slice-slide-translucent">
+	<div class="slice-slide-translucent"></div>
+</script>
