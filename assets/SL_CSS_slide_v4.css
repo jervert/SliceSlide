@@ -56,20 +56,20 @@ body {font-family:verdana,dejavu sans,sans-serif;}
 
 #page-container pre {margin-bottom:2em;}
 
-.slides {border:1px solid #ddd; border-width:1px 0; clear:both; margin-bottom:.8em; min-height:36.1em; padding:.4em 0;}
-	* html .slides {height:36.1em;}
-.slides .slide {min-height:33.8em;}
-	* html .slides .slide {height:33.8em;}
-.slides .slide-title {margin-bottom:.8em;}
-.slides .slide-title a {font-size:1.2em;}
-.slides .slide-image {margin-bottom:.8em;}
-.slides .slide-image p {font-size:1em;}
-.slides .slide-image,
-.slides .slide-image img {height:24em; width:48em;}
-.slides .slide-description {padding-bottom:1.4em; position:relative;}
-.slides .slide-text {height:4.8em;}
-.slides .slide-license {position:absolute; bottom:0; right:0;}
-.slides .slide-license p {font-size:1.1em;}
+.slice-slides {border:1px solid #ddd; border-width:1px 0; clear:both; margin-bottom:.8em; min-height:36.1em; padding:.4em 0;}
+	* html .slice-slides {height:36.1em;}
+.slice-slides.slide {min-height:33.8em;}
+	* html .slice-slides .slide {height:33.8em;}
+.slice-slides .slide-title {margin-bottom:.8em;}
+.slice-slides .slide-title a {font-size:1.2em;}
+.slice-slides .slide-image {margin-bottom:.8em;}
+.slice-slides .slide-image p {font-size:1em;}
+.slice-slides .slide-image,
+.slice-slides .slide-image img {height:24em; width:48em;}
+.slice-slides .slide-description {padding-bottom:1.4em; position:relative;}
+.slice-slides .slide-text {height:4.8em;}
+.slice-slides .slide-license {position:absolute; bottom:0; right:0;}
+.slice-slides .slide-license p {font-size:1.1em;}
 
 .slide-controls {border-top:1px solid #ddd; clear:both; padding-top:.4em}
 .slide-controls nav {float:right;}
@@ -109,17 +109,17 @@ body {font-family:verdana,dejavu sans,sans-serif;}
 .slice-slides-1 .slide-control-next a:hover img {visibility:hidden;}
 
 
-.slides-2 {min-height:24.6em;}
-	* html .slides-2 {height:24.6em;}
-.slides-2 .slide {float:left; min-height:22.2em; width:22.8em;}
-	* html .slides-2 .slide {height:22.2em;}
-.slides-2 .slide-even {float:right;}
-.slides-2 .slide:nth-child(even) {float:right;}
-.slides-2 .slide-image,
-.slides-2 .slide-image img {height:11.4em; width:22.8em;}
-.slides-2 .slide-text {height:5.6em;}
-.slides-2 .slide-text p {font-size:1.1em;}
-.slides-2 .slide-license p {font-size:1em;}
+.slice-slides-2 {min-height:24.6em;}
+	* html .slice-slides-2 {height:24.6em;}
+.slice-slides-2 .slide {float:left; min-height:22.2em; width:22.8em;}
+	* html .slice-slides-2 .slide {height:22.2em;}
+.slice-slides-2 .slide-even {float:right;}
+.slice-slides-2 .slide:nth-child(even) {float:right;}
+.slice-slides-2 .slide-image,
+.slice-slides-2 .slide-image img {height:11.4em; width:22.8em;}
+.slice-slides-2 .slide-text {height:5.6em;}
+.slice-slides-2 .slide-text p {font-size:1.1em;}
+.slice-slides-2 .slide-license p {font-size:1em;}
 
 #page-footer {text-align:center;}
 

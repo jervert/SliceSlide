@@ -42,6 +42,13 @@ jQuery(document).ready(function () {
 
 	// Slides!
 	jQuery.fn.sliceSlide();
+
+	// Slides!
+	jQuery.fn.sliceSlide({
+		slidesBox: '[data-slice-slide-box-twins]',
+		templatesControls: '#slice-slide-controls-only-text',
+		numberSimultaneousSlides: 2
+	});
 	
 });
 
@@ -53,7 +60,7 @@ jQuery(document).ready(function () {
 			interpolate: /\{\{(.+?)\}\}/g,
 			evaluate: /\[\[(.+?)\]\]/g
 		};
-		var defaults = {
+		var fn, defaults = {
 			slidesBox: '[data-slice-slide-box]',
 			slidesBoxSlide: '[data-slice-slide]',
 			slidesBoxSlideActive: '.slice-slide-active',
@@ -63,6 +70,11 @@ jQuery(document).ready(function () {
 			slidesBoxControlsPrev: '[data-slice-slide-controls-prev]',
 			slidesBoxControlsPauseResume: '[data-slice-slide-controls-pause-resume]',
 
+			templatesTranslucent: '#slice-slide-translucent',
+			templatesControls: '#slice-slide-controls',
+			templateControlsPlaying: '#slice-slide-controls-playing',
+			templateControlsPaused: '#slice-slide-controls-paused',
+
 			classesActive: 'slice-slide-active',
 			attrDestination: 'data-slice-slide-destination',
 			translucentElement: true,
@@ -71,25 +83,27 @@ jQuery(document).ready(function () {
 			numberSimultaneousSlides: 1,
 			effectTime: 150,
 			templatesUrl: 'assets/templates.html',
+			templatesCultureUrl: 'assets/templates_cultures_##CULTURE##.json',
 			idSliceSlideTemplates: 'jquery-slice-slide-templates',
 			slideTime: 3
 		},
 		op = $.extend(true, {}, defaults, options),
 
 		defaultFn = {
+			culture: {},
 			init: function () {
 				$(op.slidesBox).each(function (index) {
 					var slidesBox = $(this),
 						slides = slidesBox.find(op.slidesBoxSlide),
-						slidesCount = slides.length;
-						numberId = index;
+						slidesCount = slides.length,
+						numberId = index,
 						idSlideBox = op.prefixId + (index+1);
 					while ($('#' + idSlideBox).length) {
 						index += 1;
 						idSlideBox = op.prefixId + (index + 1);
 					}
 
-					slidesBox.attr('id',idSlideBox)
+					slidesBox.attr('id',idSlideBox);
 					fn.setSlides(slidesBox,slides,idSlideBox); // Activate initial slides, and hide all other
 					
 					fn.controls(slidesBox,slides,idSlideBox); // Play-Pause and slide number controls
@@ -106,22 +120,23 @@ jQuery(document).ready(function () {
 				slides.each(function (index, slide) {
 					$(slide).attr('id',idSlideBox+'-'+(index+1));
 					if (op.translucentElement) {
-						$(slide).append(fn.tmpl('#slice-slide-translucent'), {});
+						$(slide).append(fn.tmpl(op.templatesTranslucent), {text: fn.culture});
 					}
 				});
 				fn.initialSlides(slidesBox);
 			},
 
 			initialSlides: function (slidesBox) {
-				var allSlides = slidesBox.find(op.slidesBoxSlide);
+				var allSlides = slidesBox.find(op.slidesBoxSlide),
 					initialSlides = allSlides.filter(':lt(' + op.numberSimultaneousSlides + ')'),
 					notInitialSlides = allSlides.filter(':gt(' + (op.numberSimultaneousSlides - 1) + ')');
 				initialSlides.addClass(op.classesActive);
 				notInitialSlides.hide();
 			},
 
-			controls: function (slidesBox,slides,idSlideBox) {
-				slidesBox.append(fn.tmpl('#slice-slide-controls', {id: idSlideBox, slides: slides}));
+			controls: function (slidesBox, slides, idSlideBox) {
+				var pagesNumber = Math.ceil(slides.length / op.numberSimultaneousSlides);
+				slidesBox.append(fn.tmpl(op.templatesControls, {id: idSlideBox, slides: slides, pagesNumber: pagesNumber, numberSimultaneousSlides: op.numberSimultaneousSlides, text: fn.culture}));
 				fn.startSlide(slidesBox);
 			},
 
@@ -159,10 +174,10 @@ jQuery(document).ready(function () {
 					if (slideControls.pauseResume.find('[data-slice-slide-playing]').length > 0) {
 						fn.pauseSlide(interval, slideControls);
 					} else {
-						slideControls.pauseResume.html(fn.tmpl('#slice-slide-controls-playing'));
+						slideControls.pauseResume.html(fn.tmpl(op.templateControlsPlaying, {text: fn.culture}));
 						fn.resumeSlide(slidesBox, slideControls);
 					}
-				})
+				});
 			},
 
 			resumeSlide: function (slidesBox, slideControls) {
@@ -172,7 +187,7 @@ jQuery(document).ready(function () {
 			
 			pauseSlide: function (interval, slideControls) {
 				clearInterval(interval);
-				slideControls.pauseResume.html(fn.tmpl('#slice-slide-controls-paused'));
+				slideControls.pauseResume.html(fn.tmpl(op.templateControlsPaused, {text: fn.culture}));
 			},
 
 			goToNextAndPrevious: function (slideControlsBox, interval, slideControls) {
@@ -215,18 +230,19 @@ jQuery(document).ready(function () {
 
 			goToSlide: function (link, destination, slideControlsBox, newSelectedInFixed, selectedInFixed) {
 				selectedInFixed.removeClass(op.classesActive);
-				newSelectedInFixed.addClass(op.classesActive)
+				newSelectedInFixed.addClass(op.classesActive);
 				
 				var activeSlides = $(destination).siblings(op.slidesBoxSlideActive);
 				
 				if ($(destination).is(':hidden')) {
 					activeSlides.removeClass(op.classesActive).fadeOut(op.effectTime, function() {
 						if (op.numberSimultaneousSlides > 1) {
-							var nextDestination = $(destination).next();
-							var i=1; while (i<op.numberSimultaneousSlides) {
+							var nextDestination = $(destination).next(),
+								i=1;
+							while (i<op.numberSimultaneousSlides) {
 								nextDestination.addClass(op.classesActive);
-								var nextDestination = nextDestination.next();
-								i++;
+								nextDestination = nextDestination.next();
+								i += 1;
 							}
 						}
 
@@ -236,18 +252,20 @@ jQuery(document).ready(function () {
 				
 			}
 		},
+		culture = $('html').attr('lang') || 'en';
+
 		fn = $.extend(true, {}, defaultFn, extendedFn);
 
 		if ($('#' + op.idSliceSlideTemplates).length === 0) {
 			$.get(op.templatesUrl, function (data) {
 				$('body').append('<div id="' + op.idSliceSlideTemplates + '">' + data + '</div>');
-				fn.init();
+				$.getJSON(op.templatesCultureUrl.replace('##CULTURE##', culture), function (json) {
+					fn.culture = json;
+					fn.init();
+				});
 			});
 		} else {
 			fn.init();
 		}
-		
-
-
-	}
-})(jQuery);
+	};
+}(jQuery));
