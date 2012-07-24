@@ -69,6 +69,7 @@ jQuery(document).ready(function () {
 			slidesBoxControlsNext: '[data-slice-slide-controls-next]',
 			slidesBoxControlsPrev: '[data-slice-slide-controls-prev]',
 			slidesBoxControlsPauseResume: '[data-slice-slide-controls-pause-resume]',
+			slidesBoxControlsStatePlaying: '[data-slice-slide-playing]',
 
 			templatesTranslucent: '#slice-slide-translucent',
 			templatesControls: '#slice-slide-controls',
@@ -95,13 +96,7 @@ jQuery(document).ready(function () {
 				$(op.slidesBox).each(function (index) {
 					var slidesBox = $(this),
 						slides = slidesBox.find(op.slidesBoxSlide),
-						slidesCount = slides.length,
-						numberId = index,
-						idSlideBox = op.prefixId + (index+1);
-					while ($('#' + idSlideBox).length) {
-						index += 1;
-						idSlideBox = op.prefixId + (index + 1);
-					}
+						idSlideBox = fn.getSlidesBoxId(index);
 
 					slidesBox.attr('id',idSlideBox);
 					fn.setSlides(slidesBox,slides,idSlideBox); // Activate initial slides, and hide all other
@@ -109,6 +104,15 @@ jQuery(document).ready(function () {
 					fn.controls(slidesBox,slides,idSlideBox); // Play-Pause and slide number controls
 					
 				});
+			},
+
+			getSlidesBoxId: function (index) {
+				var idSlideBox = op.prefixId + (index + 1);
+				while ($('#' + idSlideBox).length) {
+					index += 1;
+					idSlideBox = op.prefixId + (index + 1);
+				}
+				return idSlideBox;
 			},
 
 			tmpl: function (id, context) {
@@ -159,48 +163,57 @@ jQuery(document).ready(function () {
 					fn.changeSlide(slideControlsBox, 1);
 				}, intervalTime);
 				
-				fn.goToNextAndPrevious (slideControlsBox, interval, slideControls);
+				fn.eventControls.nextAndPrevious (slideControlsBox, interval, slideControls);
+				fn.eventControls.fixed(slideControlsBox, interval, slideControls);
+				fn.eventControls.pauseResume(slidesBox, interval, slideControls);
 				
-				slideControls.fixed.find('a, [role="link"]').on('click',function (event) {
-					event.preventDefault();
-					var newSelectedInFixed = $(this).closest(op.slidesBoxControlsFixed),
-						selectedInFixed = newSelectedInFixed.siblings(op.slidesBoxSlideActive);
-					fn.pauseSlide(interval, slideControls);
-					fn.goToSlide($(this), $(this).attr('data-slice-slide-destination'), slideControlsBox, newSelectedInFixed, selectedInFixed);
-				});
 				
-				slideControls.pauseResume.bind('click',function (event) {
-					event.preventDefault();
-					if (slideControls.pauseResume.find('[data-slice-slide-playing]').length > 0) {
+			},
+			eventControls: {
+				nextAndPrevious: function (slideControlsBox, interval, slideControls) {
+					slideControls.previous.bind('click',function (event) {
+						event.preventDefault();
 						fn.pauseSlide(interval, slideControls);
-					} else {
-						slideControls.pauseResume.html(fn.tmpl(op.templateControlsPlaying, {text: fn.culture}));
-						fn.resumeSlide(slidesBox, slideControls);
-					}
-				});
+						fn.changeSlide(slideControlsBox, -1);
+					});
+					slideControls.next.bind('click',function (event) {
+						event.preventDefault();
+						fn.pauseSlide(interval, slideControls);
+						fn.changeSlide(slideControlsBox, 1);
+					});
+				},
+
+				fixed: function (slideControlsBox, interval, slideControls) {
+					slideControls.fixed.find('a, [role="link"]').on('click',function (event) {
+						event.preventDefault();
+						var newSelectedInFixed = $(this).closest(op.slidesBoxControlsFixed),
+							selectedInFixed = newSelectedInFixed.siblings(op.slidesBoxSlideActive);
+						fn.pauseSlide(interval, slideControls);
+						fn.goToSlide($(this), $(this).attr(op.attrDestination), slideControlsBox, newSelectedInFixed, selectedInFixed);
+					});
+				},
+
+				pauseResume: function (slidesBox, interval, slideControls) {
+					slideControls.pauseResume.bind('click',function (event) {
+						event.preventDefault();
+						if (slideControls.pauseResume.find(op.slidesBoxControlsStatePlaying).length > 0) {
+							fn.pauseSlide(interval, slideControls);
+						} else {
+							slideControls.pauseResume.html(fn.tmpl(op.templateControlsPlaying, {text: fn.culture}));
+							fn.resumeSlide(slidesBox, slideControls);
+						}
+					});
+				}
 			},
 
 			resumeSlide: function (slidesBox, slideControls) {
 				slideControls.fixed.add(slideControls.pauseResume).add(slideControls.previous).add(slideControls.next).unbind('click');
 				fn.startSlide(slidesBox);
 			},
-			
+
 			pauseSlide: function (interval, slideControls) {
 				clearInterval(interval);
 				slideControls.pauseResume.html(fn.tmpl(op.templateControlsPaused, {text: fn.culture}));
-			},
-
-			goToNextAndPrevious: function (slideControlsBox, interval, slideControls) {
-				slideControls.previous.bind('click',function (event) {
-					event.preventDefault();
-					fn.pauseSlide(interval, slideControls);
-					fn.changeSlide(slideControlsBox, -1);
-				});
-				slideControls.next.bind('click',function (event) {
-					event.preventDefault();
-					fn.pauseSlide(interval, slideControls);
-					fn.changeSlide(slideControlsBox, 1);
-				});
 			},
 
 			changeSlide: function (slideControlsBox, direction) {
