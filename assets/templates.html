@@ -1,14 +1,14 @@
 <script type="text/template" id="slice-slide-controls">
-	<div class="slide-controls" data-slice-slide-controls>
+	<div class="slide-controls" role="toolbar" data-slice-slide-controls>
 		<nav>
-			<p><a class="slide-pause-or-resume" href="#" data-slice-slide-controls-pause-resume><span data-slice-slide-playing>{{text.controlsPause}}</span></a><span class="indented">{{text.controlsGoTo}}:</span></p>
+			<p><a class="slide-pause-or-resume" href="#" aria-controls="{{id}}" data-slice-slide-controls-pause-resume><span data-slice-slide-playing>{{text.controlsPause}}</span></a><span class="indented">{{text.controlsGoTo}}:</span></p>
 			<ul data-slice-slide-controls-prev-and-next>
-				<li class="slide-control-previous"><a href="#" data-slice-slide-controls-prev><img src="assets/SL_IMG_controls_previous.png" alt="{{text.controlsPrevious}}" /></a></li>
-				<li class="slide-control-next"><a href="#" data-slice-slide-controls-next><img src="assets/SL_IMG_controls_next.png" alt="{{text.controlsNext}}" /></a></li>
+				<li class="slide-control-previous"><a href="#" aria-controls="{{id}}" data-slice-slide-controls-prev><img src="assets/SL_IMG_controls_previous.png" alt="{{text.controlsPrevious}}" /></a></li>
+				<li class="slide-control-next"><a href="#" aria-controls="{{id}}" data-slice-slide-controls-next><img src="assets/SL_IMG_controls_next.png" alt="{{text.controlsNext}}" /></a></li>
 			</ul>
 			<ul class="clear">
 			[[ var sliceSlidePage = 1, sliceSlidePageIndex = 1; while (sliceSlidePage <= pagesNumber) { ]]
-				<li class="slide-control-element[[ if (sliceSlidePage === 1) { ]] slice-slide-active[[ } ]]" data-slice-slide-controls-fixed><a href="#" data-slice-slide-destination="#{{id}}-{{sliceSlidePageIndex}}">{{sliceSlidePage}}</a></li>
+				<li class="slide-control-element[[ if (sliceSlidePage === 1) { ]] slice-slide-active[[ } ]]" data-slice-slide-controls-fixed><a href="#" aria-controls="{{id}}" data-slice-slide-destination="#{{id}}-{{sliceSlidePageIndex}}">{{sliceSlidePage}}</a></li>
 				[[ sliceSlidePage += 1; ]]
 				[[ sliceSlidePageIndex += numberSimultaneousSlides; ]]
 			[[ } ]]
@@ -20,14 +20,14 @@
 <script type="text/template" id="slice-slide-controls-only-text">
 	<div class="slide-controls" data-slice-slide-controls>
 		<nav>
-			<p><a class="slide-pause-or-resume" href="#" data-slice-slide-controls-pause-resume><span data-slice-slide-playing>{{text.controlsPause}}</span></a><span class="indented">{{text.controlsGoTo}}:</span></p>
+			<p><a class="slide-pause-or-resume" href="#" aria-controls="{{id}}" data-slice-slide-controls-pause-resume><span data-slice-slide-playing>{{text.controlsPause}}</span></a><span class="indented">{{text.controlsGoTo}}:</span></p>
 			<ul data-slice-slide-controls-prev-and-next>
-				<li class="slide-control-previous"><a href="#" data-slice-slide-controls-prev>{{text.controlsPrevious}}</a></li>
-				<li class="slide-control-next"><a href="#" data-slice-slide-controls-next>{{text.controlsNext}}</a></li>
+				<li class="slide-control-previous"><a href="#" aria-controls="{{id}}" data-slice-slide-controls-prev>{{text.controlsPrevious}}</a></li>
+				<li class="slide-control-next"><a href="#" aria-controls="{{id}}" data-slice-slide-controls-next>{{text.controlsNext}}</a></li>
 			</ul>
 			<ul class="clear">
 			[[ var sliceSlidePage = 1, sliceSlidePageIndex = 1; while (sliceSlidePage <= pagesNumber) { ]]
-				<li class="slide-control-element[[ if (sliceSlidePage === 1) { ]] slice-slide-active[[ } ]]" data-slice-slide-controls-fixed><a href="#" data-slice-slide-destination="#{{id}}-{{sliceSlidePageIndex}}">{{sliceSlidePage}}</a></li>
+				<li class="slide-control-element[[ if (sliceSlidePage === 1) { ]] slice-slide-active[[ } ]]" data-slice-slide-controls-fixed><a href="#" aria-controls="{{id}}" data-slice-slide-destination="#{{id}}-{{sliceSlidePageIndex}}">{{sliceSlidePage}}</a></li>
 				[[ sliceSlidePage += 1; ]]
 				[[ sliceSlidePageIndex += numberSimultaneousSlides; ]]
 			[[ } ]]

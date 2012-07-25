@@ -68,11 +68,24 @@ jQuery(document).ready(function () {
 				var self = this;
 				self.el.slides = self.el.slidesBox.find(op.slidesBoxSlide);
 				self.el.idSlideBox = this.getSlidesBoxId();
-
 				self.el.slidesBox.attr('id', self.el.idSlideBox);
+				self.ariaSlideBox();
+				self.ariaSlides();
 				self.setSlides(); // Activate initial slides, and hide all other
-				
 				self.controls(); // Play-Pause and slide number controls
+			},
+
+			ariaSlideBox: function () {
+				var self = this;
+				self.el.slidesBox.is('[role="listbox"]') || self.el.slidesBox.attr('role', 'listbox');
+			},
+			ariaSlides: function () {
+				var self = this;
+				$.each(self.el.slides, function (index, slideObject) {
+					var slide = $(slideObject)
+					slide.is('[tabindex="0"]') || slide.attr('tabindex', '0');
+					slide.is('[role="option"]') || slide.attr('role', 'option');
+				});
 			},
 
 			getSlidesBoxId: function () {
@@ -234,12 +247,12 @@ jQuery(document).ready(function () {
 					activeSlides = $(destination).siblings(op.slidesBoxSlideActive);
 				
 				if ($(destination).is(':hidden')) {
-					activeSlides.removeClass(op.classesActive).fadeOut(op.effectTime, function() {
+					activeSlides.removeClass(op.classesActive).removeAttr('aria-selected').fadeOut(op.effectTime, function() {
 						if (op.numberSimultaneousSlides > 1) {
 							var nextDestination = $(destination).next(),
 								i=1;
 							while (i<op.numberSimultaneousSlides) {
-								nextDestination.addClass(op.classesActive);
+								nextDestination.addClass(op.classesActive).attr('aria-selected', true);
 								nextDestination = nextDestination.next();
 								i += 1;
 							}
