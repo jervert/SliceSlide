@@ -1,3 +1,5 @@
 SLICE SLIDES
 
 Simple and accesible slideshow with Javascript + Jquery + Underscore
+
+Compatible with Internet Explorer 7+ (also IE 6, with minor glitches in the example CSS), Opera, Firefox 3+, Safari, Chrome.
