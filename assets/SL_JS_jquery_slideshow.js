@@ -8,37 +8,7 @@ jQuery('<nav></nav>');*/
 
 jQuery(document).ready(function () {
 	// Some fixes for IE8 and earlier
-	//jQuery('.slides-2 .slide:nth-child(even)').addClass('slide-even');
-	
-	// Languages
-	/*var languageSetting = 'en';
-	var languageValue = $('html').eq(0).attr('lang');
-	if (languageValue) {
-		languageSetting = languageValue;
-	}*/
-	
-	/*var slideCultures = {
-		
-		'en': {
-						'pause': 'Pause'
-						,'resume': 'Resume'
-						,'previous': 'Previous'
-						,'next': 'Next'
-						,'numberedListIntro': 'Go to:'
-			
-					}
-		,'es': {
-						'pause': 'Pausar'
-						,'resume': 'Continuar'
-						,'previous': 'Anterior'
-						,'next': 'Siguiente'
-						,'numberedListIntro': 'Ir a:'
-			
-					}
-		
-	}*/
-	
-
+	jQuery('.slice-slides-2 .slide:nth-child(even)').addClass('slide-even');
 
 	// Slides!
 	jQuery.fn.sliceSlide();
@@ -156,15 +126,12 @@ jQuery(document).ready(function () {
 				var self = this;
 				self.el.slideControlsBox = self.el.slidesBox.find(op.slidesBoxControls).first();
 				self.el.slideControls = self.getSlideControls();
-				
-				/*interval = setInterval(function () {
-					self.changeSlide(1);
-				}, self.el.intervalTime);*/
-				self.startInterval();
-				
+	
 				self.eventControlsNextAndPrevious();
 				self.eventControlsFixed();
-				self.eventControlsPauseResume();			
+				self.eventControlsPauseResume();	
+
+				self.startInterval();		
 			},
 
 			startInterval: function () {
@@ -224,8 +191,7 @@ jQuery(document).ready(function () {
 
 			resumeSlide: function () {
 				var self = this;
-				self.el.slideControls.fixed.add(self.el.slideControls.pauseResume).add(self.el.slideControls.previous).add(self.el.slideControls.next).unbind('click');
-				self.startSlide();
+				self.startInterval();
 			},
 
 			pauseSlide: function () {
