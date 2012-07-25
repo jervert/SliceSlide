@@ -252,13 +252,13 @@ jQuery(document).ready(function () {
 							var nextDestination = $(destination).next(),
 								i=1;
 							while (i<op.numberSimultaneousSlides) {
-								nextDestination.addClass(op.classesActive).attr('aria-selected', true);
+								nextDestination.addClass(op.classesActive);
 								nextDestination = nextDestination.next();
 								i += 1;
 							}
 						}
 
-						$(destination).addClass(op.classesActive).add($(destination).siblings(op.slidesBoxSlideActive)).fadeIn(op.effectTime);
+						$(destination).addClass(op.classesActive).add($(destination).siblings(op.slidesBoxSlideActive)).attr('aria-selected', true).fadeIn(op.effectTime);
 					});
 				}
 				
