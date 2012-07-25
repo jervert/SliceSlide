@@ -54,7 +54,7 @@ jQuery(document).ready(function () {
 			numberSimultaneousSlides: 1,
 			effectTime: 150,
 			templatesUrl: 'assets/templates.html',
-			templatesCultureUrl: 'assets/templates_cultures_##CULTURE##.json',
+			templatesCultureUrl: 'assets/cultures/templates_cultures_##CULTURE##.json',
 			idSliceSlideTemplates: 'jquery-slice-slide-templates',
 			slideTime: 3,
 			culture: $('html').attr('lang') || 'en'
