@@ -85,7 +85,7 @@ body {font-family:verdana,dejavu sans,sans-serif;}
 .slice-slides-1 .slide-header,
 .slice-slides-1 .slide-description {position:absolute; z-index:2;}
 .slice-slides-1 .slide-controls {border:0; padding-bottom:.4em;}
-.slice-slides-1 .slice-slide-translucent {background-color:#000; bottom:0; height:7.2em; left:0; opacity:.5; width:48em; z-index:1;}
+.slice-slides-1 .slice-slide-translucent {background-color:#000; bottom:0; filter:alpha(opacity = 50); height:7.2em; left:0; opacity:.5; width:48em; z-index:1;}
 .slice-slides-1 .slide-header {left:.4em; top:17.2em;}
 .slice-slides-1 .slide-header,
 .slice-slides-1 .slide-header a {color:#fff;}
