@@ -95,14 +95,14 @@ jQuery(document).ready(function () {
 			culture: {},
 			el: {},
 			init: function () {
-				var self = this,
-					slides = self.el.slidesBox.find(op.slidesBoxSlide),
-					idSlideBox = this.getSlidesBoxId();
+				var self = this;
+				self.el.slides = self.el.slidesBox.find(op.slidesBoxSlide);
+				self.el.idSlideBox = this.getSlidesBoxId();
 
-				self.el.slidesBox.attr('id', idSlideBox);
-				self.setSlides(slides, idSlideBox); // Activate initial slides, and hide all other
+				self.el.slidesBox.attr('id', self.el.idSlideBox);
+				self.setSlides(); // Activate initial slides, and hide all other
 				
-				self.controls(slides, idSlideBox); // Play-Pause and slide number controls
+				self.controls(); // Play-Pause and slide number controls
 			},
 
 			getSlidesBoxId: function () {
@@ -120,10 +120,10 @@ jQuery(document).ready(function () {
 				return _.template(html, context);
 			},
 
-			setSlides: function (slides, idSlideBox) {
+			setSlides: function () {
 				var self = this;
-				slides.each(function (index, slide) {
-					$(slide).attr('id',idSlideBox+'-'+(index+1));
+				self.el.slides.each(function (index, slide) {
+					$(slide).attr('id', self.el.idSlideBox+'-'+(index+1));
 					if (op.translucentElement) {
 						$(slide).append(self.tmpl(op.templatesTranslucent), {text: self.culture});
 					}
@@ -140,99 +140,106 @@ jQuery(document).ready(function () {
 				notInitialSlides.hide();
 			},
 
-			controls: function (slides, idSlideBox) {
+			controls: function () {
 				var self = this,
-					pagesNumber = Math.ceil(slides.length / op.numberSimultaneousSlides);
-				self.el.slidesBox.append(self.tmpl(op.templatesControls, {id: idSlideBox, slides: slides, pagesNumber: pagesNumber, numberSimultaneousSlides: op.numberSimultaneousSlides, text: self.culture}));
+					pagesNumber = Math.ceil(self.el.slides.length / op.numberSimultaneousSlides);
+				self.el.slidesBox.append(self.tmpl(op.templatesControls, {id: self.el.idSlideBox, slides: self.el.slides, pagesNumber: pagesNumber, numberSimultaneousSlides: op.numberSimultaneousSlides, text: self.culture}));
 				self.startSlide();
 			},
 
-			getControls: function (slideControlsBox, controls) {
-				return slideControlsBox.find(controls);
+			getControls: function (controls) {
+				var self = this;
+				return self.el.slideControlsBox.find(controls);
 			},
 			
 			startSlide: function () {
-				var self = this,
-					interval,
-					slideControlsBox = self.el.slidesBox.find(op.slidesBoxControls).first(),
-					slideControls = self.getSlideControls(slideControlsBox),
-					intervalTime = op.slideTime * 1000;
+				var self = this;
+				self.el.slideControlsBox = self.el.slidesBox.find(op.slidesBoxControls).first();
+				self.el.slideControls = self.getSlideControls();
 				
-				interval = setInterval(function () {
-					self.changeSlide(slideControlsBox, 1);
-				}, intervalTime);
+				/*interval = setInterval(function () {
+					self.changeSlide(1);
+				}, self.el.intervalTime);*/
+				self.startInterval();
 				
-				self.eventControlsNextAndPrevious(slideControlsBox, interval, slideControls);
-				self.eventControlsFixed(slideControlsBox, interval, slideControls);
-				self.eventControlsPauseResume(interval, slideControls);			
+				self.eventControlsNextAndPrevious();
+				self.eventControlsFixed();
+				self.eventControlsPauseResume();			
 			},
 
-			getSlideControls: function (slideControlsBox) {
+			startInterval: function () {
+				var self = this;
+				self.el.interval = setInterval(function () {
+					self.changeSlide(1);
+				}, self.el.intervalTime);
+			},
+
+			getSlideControls: function () {
 				var self = this;
 				return {
-					fixed: self.getControls(slideControlsBox, op.slidesBoxControlsFixed),
-					previous: self.getControls(slideControlsBox, op.slidesBoxControlsPrev),
-					next: self.getControls(slideControlsBox, op.slidesBoxControlsNext),
-					pauseResume: self.getControls(slideControlsBox, op.slidesBoxControlsPauseResume)
+					fixed: self.getControls(op.slidesBoxControlsFixed),
+					previous: self.getControls(op.slidesBoxControlsPrev),
+					next: self.getControls(op.slidesBoxControlsNext),
+					pauseResume: self.getControls(op.slidesBoxControlsPauseResume)
 				};
 			},
 
-			eventControlsNextAndPrevious: function (slideControlsBox, interval, slideControls) {
+			eventControlsNextAndPrevious: function () {
 				var self = this;
-				slideControls.previous.bind('click',function (event) {
+				self.el.slideControls.previous.bind('click',function (event) {
 					event.preventDefault();
-					self.pauseSlide(interval, slideControls);
-					self.changeSlide(slideControlsBox, -1);
+					self.pauseSlide();
+					self.changeSlide(-1);
 				});
-				slideControls.next.bind('click',function (event) {
+				self.el.slideControls.next.bind('click',function (event) {
 					event.preventDefault();
-					self.pauseSlide(interval, slideControls);
-					self.changeSlide(slideControlsBox, 1);
+					self.pauseSlide();
+					self.changeSlide(1);
 				});
 			},
 
-			eventControlsFixed: function (slideControlsBox, interval, slideControls) {
+			eventControlsFixed: function () {
 				var self = this;
-				slideControls.fixed.find('a, [role="link"]').on('click',function (event) {
+				self.el.slideControls.fixed.find('a, [role="link"]').on('click',function (event) {
 					event.preventDefault();
 					var newSelectedInFixed = $(this).closest(op.slidesBoxControlsFixed),
 						selectedInFixed = newSelectedInFixed.siblings(op.slidesBoxSlideActive);
-					self.pauseSlide(interval, slideControls);
-					self.goToSlide($(this), $(this).attr(op.attrDestination), slideControlsBox, newSelectedInFixed, selectedInFixed);
+					self.pauseSlide();
+					self.goToSlide($(this), $(this).attr(op.attrDestination), newSelectedInFixed, selectedInFixed);
 				});
 			},
 
-			eventControlsPauseResume: function (interval, slideControls) {
+			eventControlsPauseResume: function () {
 				var self = this;
-				slideControls.pauseResume.bind('click',function (event) {
+				self.el.slideControls.pauseResume.bind('click',function (event) {
 					event.preventDefault();
-					if (slideControls.pauseResume.find(op.slidesBoxControlsStatePlaying).length > 0) {
-						self.pauseSlide(interval, slideControls);
+					if (self.el.slideControls.pauseResume.find(op.slidesBoxControlsStatePlaying).length > 0) {
+						self.pauseSlide();
 					} else {
-						slideControls.pauseResume.html(self.tmpl(op.templateControlsPlaying, {text: self.culture}));
-						self.resumeSlide(slideControls);
+						self.el.slideControls.pauseResume.html(self.tmpl(op.templateControlsPlaying, {text: self.culture}));
+						self.resumeSlide();
 					}
 				});
 			},
 
-			resumeSlide: function (slideControls) {
+			resumeSlide: function () {
 				var self = this;
-				slideControls.fixed.add(slideControls.pauseResume).add(slideControls.previous).add(slideControls.next).unbind('click');
+				self.el.slideControls.fixed.add(self.el.slideControls.pauseResume).add(self.el.slideControls.previous).add(self.el.slideControls.next).unbind('click');
 				self.startSlide();
 			},
 
-			pauseSlide: function (interval, slideControls) {
+			pauseSlide: function () {
 				var self = this;
-				clearInterval(interval);
-				slideControls.pauseResume.html(self.tmpl(op.templateControlsPaused, {text: self.culture}));
+				clearInterval(self.el.interval);
+				self.el.slideControls.pauseResume.html(self.tmpl(op.templateControlsPaused, {text: self.culture}));
 			},
 
-			changeSlide: function (slideControlsBox, direction) {
+			changeSlide: function (direction) {
 				var self = this,
 					newSelectedInFixed,
 					link,
 					destination,
-					selectedInFixed = slideControlsBox.find(op.slidesBoxSlideActive).first();
+					selectedInFixed = self.el.slideControlsBox.find(op.slidesBoxSlideActive).first();
 			
 				if (direction > 0) {
 					if (selectedInFixed.is(':last-child')) {
@@ -250,10 +257,10 @@ jQuery(document).ready(function () {
 			
 				link = newSelectedInFixed.find('a, [role="link"]').first();
 				destination = link.attr(op.attrDestination);
-				self.goToSlide(link, destination, slideControlsBox, newSelectedInFixed, selectedInFixed);
+				self.goToSlide(link, destination, newSelectedInFixed, selectedInFixed);
 			},
 
-			goToSlide: function (link, destination, slideControlsBox, newSelectedInFixed, selectedInFixed) {
+			goToSlide: function (link, destination, newSelectedInFixed, selectedInFixed) {
 				selectedInFixed.removeClass(op.classesActive);
 				newSelectedInFixed.addClass(op.classesActive);
 				
@@ -288,7 +295,8 @@ jQuery(document).ready(function () {
 				fn.culture = cultureContent;
 				fn.el = $.extend({}, {
 					slidesBox: $(this),
-					slidesBoxIndex: index
+					slidesBoxIndex: index,
+					intervalTime: op.slideTime * 1000
 				});
 				fn.init($(this), index);
 			});
