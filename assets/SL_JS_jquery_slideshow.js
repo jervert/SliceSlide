@@ -8,7 +8,7 @@ jQuery('<nav></nav>');*/
 
 jQuery(document).ready(function () {
 	// Some fixes for IE8 and earlier
-	jQuery('.slice-slides-2 .slide:nth-child(even)').addClass('slide-even');
+	jQuery('.slice-slides-2 .slide:nth-child(even)').addClass('slide-odd');
 
 	// Slides!
 	jQuery.fn.sliceSlide();
@@ -40,6 +40,7 @@ jQuery(document).ready(function () {
 			slidesBoxControlsPrev: '[data-slice-slide-controls-prev]',
 			slidesBoxControlsPauseResume: '[data-slice-slide-controls-pause-resume]',
 			slidesBoxControlsStatePlaying: '[data-slice-slide-playing]',
+			links: 'a, [role="link"]',
 
 			templatesTranslucent: '#slice-slide-translucent',
 			templatesControls: '#slice-slide-controls',
@@ -64,6 +65,14 @@ jQuery(document).ready(function () {
 		defaultFn = {
 			culture: {},
 			el: {},
+			keys: {
+				intro: 13,
+				tab: 9,
+				up: 38,
+				right: 39,
+				down: 40,
+				left: 37
+			},
 			init: function () {
 				var self = this;
 				self.el.slides = self.el.slidesBox.find(op.slidesBoxSlide);
@@ -77,14 +86,66 @@ jQuery(document).ready(function () {
 
 			ariaSlideBox: function () {
 				var self = this;
-				self.el.slidesBox.is('[role="listbox"]') || self.el.slidesBox.attr('role', 'listbox');
+				if (!self.el.slidesBox.is('[role="listbox"]')) {self.el.slidesBox.attr('role', 'listbox');}
 			},
 			ariaSlides: function () {
 				var self = this;
 				$.each(self.el.slides, function (index, slideObject) {
-					var slide = $(slideObject)
-					slide.is('[tabindex="0"]') || slide.attr('tabindex', '0');
-					slide.is('[role="option"]') || slide.attr('role', 'option');
+					var slide = $(slideObject);
+					if (!slide.is('[tabindex="0"]')) {slide.attr('tabindex', '-1');}
+					if (!slide.is('[role="option"]')) {slide.attr('role', 'option');}
+					slide.on('keydown', function (event) {
+						
+						if (event.keyCode === self.keys.left || event.keyCode === self.keys.up) {
+							event.preventDefault();
+							self.pauseSlide();
+							if (slide.prev(op.slidesBoxSlideActive).length > 0) {
+								slide.prev(op.slidesBoxSlideActive).focus();
+							} else {
+								self.changeSlide(-1, true);
+							}	
+						}
+
+						if (event.keyCode === self.keys.right || event.keyCode === self.keys.down) {
+							event.preventDefault();
+							self.pauseSlide();
+							if (slide.next(op.slidesBoxSlideActive).length > 0) {
+								slide.next(op.slidesBoxSlideActive).focus();
+							} else {
+								self.changeSlide(1, true);
+							}	
+						}
+					});
+				});
+			},
+			ariaControlsNextAndPrevious: function () {
+				var self = this;
+				// TODO: ...
+			},
+			ariaControlsFixed: function () {
+				var self = this;
+				self.el.fixedLinks.on('keydown', function (event) {
+					//console.log(event.keyCode);
+					var controlContainer = $(this).closest(op.slidesBoxControlsFixed),
+						controlContainerPrev = controlContainer.prev(op.slidesBoxControlsFixed),
+						controlContainerNext = controlContainer.next(op.slidesBoxControlsFixed),
+						controlContainerSiblings = controlContainer.siblings(op.slidesBoxControlsFixed);
+					if (event.keyCode === self.keys.left || event.keyCode === self.keys.up) {
+						event.preventDefault();
+						if (controlContainerPrev.length > 0) {
+							controlContainerPrev.find(op.links).first().focus();
+						} else {
+							controlContainerSiblings.last().find(op.links).first().focus();
+						}
+					}
+					if (event.keyCode === self.keys.right || event.keyCode === self.keys.down) {
+						event.preventDefault();
+						if (controlContainerNext.length > 0) {
+							controlContainerNext.find(op.links).first().focus();
+						} else {
+							controlContainerSiblings.first().find(op.links).first().focus();
+						}
+					}
 				});
 			},
 
@@ -126,7 +187,7 @@ jQuery(document).ready(function () {
 			controls: function () {
 				var self = this,
 					pagesNumber = Math.ceil(self.el.slides.length / op.numberSimultaneousSlides);
-				self.el.slidesBox.append(self.tmpl(op.templatesControls, {id: self.el.idSlideBox, slides: self.el.slides, pagesNumber: pagesNumber, numberSimultaneousSlides: op.numberSimultaneousSlides, text: self.culture}));
+				self.el.slidesBox.prepend(self.tmpl(op.templatesControls, {id: self.el.idSlideBox, slides: self.el.slides, pagesNumber: pagesNumber, numberSimultaneousSlides: op.numberSimultaneousSlides, text: self.culture}));
 				self.startSlide();
 			},
 
@@ -176,17 +237,22 @@ jQuery(document).ready(function () {
 					self.pauseSlide();
 					self.changeSlide(1);
 				});
+				self.ariaControlsNextAndPrevious();
 			},
 
 			eventControlsFixed: function () {
 				var self = this;
-				self.el.slideControls.fixed.find('a, [role="link"]').on('click',function (event) {
+
+				self.el.fixedLinks = self.el.slideControls.fixed.find(op.links);
+
+				self.el.fixedLinks.on('click', function (event) {
 					event.preventDefault();
 					var newSelectedInFixed = $(this).closest(op.slidesBoxControlsFixed),
 						selectedInFixed = newSelectedInFixed.siblings(op.slidesBoxSlideActive);
 					self.pauseSlide();
-					self.goToSlide($(this), $(this).attr(op.attrDestination), newSelectedInFixed, selectedInFixed);
+					self.goToSlide($(this), $(this).attr(op.attrDestination), newSelectedInFixed, selectedInFixed, 1, true);
 				});
+				self.ariaControlsFixed();
 			},
 
 			eventControlsPauseResume: function () {
@@ -213,7 +279,7 @@ jQuery(document).ready(function () {
 				self.el.slideControls.pauseResume.html(self.tmpl(op.templateControlsPaused, {text: self.culture}));
 			},
 
-			changeSlide: function (direction) {
+			changeSlide: function (direction, focus) {
 				var self = this,
 					newSelectedInFixed,
 					link,
@@ -234,20 +300,21 @@ jQuery(document).ready(function () {
 					}
 				}
 			
-				link = newSelectedInFixed.find('a, [role="link"]').first();
+				link = newSelectedInFixed.find(op.links).first();
 				destination = link.attr(op.attrDestination);
-				self.goToSlide(link, destination, newSelectedInFixed, selectedInFixed);
+				self.goToSlide(link, destination, newSelectedInFixed, selectedInFixed, direction, focus);
 			},
 
-			goToSlide: function (link, destination, newSelectedInFixed, selectedInFixed) {
+			goToSlide: function (link, destination, newSelectedInFixed, selectedInFixed, direction, focus) {
 				selectedInFixed.removeClass(op.classesActive);
 				newSelectedInFixed.addClass(op.classesActive);
 				
 				var self = this,
-					activeSlides = $(destination).siblings(op.slidesBoxSlideActive);
+					activeSlides = $(destination).siblings(op.slidesBoxSlideActive),
+					newActiveSlides;
 				
 				if ($(destination).is(':hidden')) {
-					activeSlides.removeClass(op.classesActive).removeAttr('aria-selected').fadeOut(op.effectTime, function() {
+					activeSlides.removeClass(op.classesActive).removeAttr('aria-selected').attr('tabindex', '0').fadeOut(op.effectTime, function() {
 						if (op.numberSimultaneousSlides > 1) {
 							var nextDestination = $(destination).next(),
 								i=1;
@@ -257,8 +324,15 @@ jQuery(document).ready(function () {
 								i += 1;
 							}
 						}
-
-						$(destination).addClass(op.classesActive).add($(destination).siblings(op.slidesBoxSlideActive)).attr('aria-selected', true).fadeIn(op.effectTime);
+						$(destination).addClass(op.classesActive);
+						newActiveSlides = $(destination).add($(destination).siblings(op.slidesBoxSlideActive));
+						newActiveSlides.attr({'aria-selected': true, 'tabindex': '0'}).fadeIn(op.effectTime, function () {
+							if (focus && direction > 0) {
+								newActiveSlides.first().focus();
+							} else if (focus && direction < 0) {
+								newActiveSlides.last().focus();
+							}
+						});
 					});
 				}
 				
