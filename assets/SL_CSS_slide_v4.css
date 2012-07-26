@@ -56,7 +56,7 @@ body {font-family:verdana,dejavu sans,sans-serif;}
 
 #page-container pre {margin-bottom:2em;}
 
-.slice-slides {border:1px solid #ddd; border-width:1px 0; clear:both; margin-bottom:.8em; min-height:36.1em; padding:.4em 0;}
+.slice-slides {border:1px solid #ddd; border-width:1px 0; clear:both; margin-bottom:.8em; min-height:36.1em; padding:.4em 0 2.1em 0; position: relative;}
 	* html .slice-slides {height:36.1em;}
 .slice-slides.slide {min-height:33.8em;}
 	* html .slice-slides .slide {height:33.8em;}
@@ -71,7 +71,7 @@ body {font-family:verdana,dejavu sans,sans-serif;}
 .slice-slides .slide-license {position:absolute; bottom:0; right:0;}
 .slice-slides .slide-license p {font-size:1.1em;}
 
-.slide-controls {border-top:1px solid #ddd; clear:both; padding-top:.4em}
+.slide-controls {bottom:0; clear:both; padding-bottom:.4em; position:absolute; right:0; width:48em; z-index:2;}
 .slide-controls nav {float:right;}
 .slide-controls p, .slide-controls ul {float:left;}
 .slide-controls ul li {float:left; margin-left:.5em;}
@@ -94,7 +94,7 @@ body {font-family:verdana,dejavu sans,sans-serif;}
 .slice-slides-1 .slide-license a {color:#fff;}
 
 .slice-slides-1 .slide-control-previous,
-.slice-slides-1 .slide-control-next {font-size:1em; margin:0; position:absolute; top:6em;}
+.slice-slides-1 .slide-control-next {font-size:1em; margin:0; position:absolute; top:-18em;}
 .slice-slides-1 .slide-control-previous {left:-.4em;}
 .slice-slides-1 .slide-control-next {right:-.6em;}
 .slice-slides-1 .slide-control-previous a,
@@ -113,8 +113,8 @@ body {font-family:verdana,dejavu sans,sans-serif;}
 	* html .slice-slides-2 {height:24.6em;}
 .slice-slides-2 .slide {float:left; min-height:22.2em; width:22.8em;}
 	* html .slice-slides-2 .slide {height:22.2em;}
-.slice-slides-2 .slide-even {float:right;}
-.slice-slides-2 .slide:nth-child(even) {float:right;}
+.slice-slides-2 .slide-odd,
+.slice-slides-2 .slide:nth-child(odd) {float:right;}
 .slice-slides-2 .slide-image,
 .slice-slides-2 .slide-image img {height:11.4em; width:22.8em;}
 .slice-slides-2 .slide-text {height:5.6em;}
@@ -122,8 +122,3 @@ body {font-family:verdana,dejavu sans,sans-serif;}
 .slice-slides-2 .slide-license p {font-size:1em;}
 
 #page-footer {text-align:center;}
-
-
-/* garbage */
-
-
