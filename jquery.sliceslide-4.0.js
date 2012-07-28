@@ -1,29 +1,3 @@
-/*jQuery('<article></article>');
-jQuery('<section></section>');
-jQuery('<header></header>');
-jQuery('<hgroup></hgroup>');
-jQuery('<footer></footer>');
-jQuery('<nav></nav>');*/
-
-
-jQuery(document).ready(function () {
-	// Some fixes for IE8 and earlier
-	jQuery('.slice-slides-2 .slide:nth-child(even)').addClass('slide-odd');
-
-	// Slides!
-	jQuery.fn.sliceSlide();
-
-	// Slides!
-	jQuery.fn.sliceSlide({
-		slidesBox: '[data-slice-slide-box-twins]',
-		templatesControls: '#slice-slide-controls-only-text',
-		numberSimultaneousSlides: 2
-	});
-	
-});
-
-
-
 (function($){
 	$.fn.sliceSlide = function (options, extendedFn) {
 		_.templateSettings = {
@@ -55,8 +29,8 @@ jQuery(document).ready(function () {
 			prefixId: 'jquery-slice-slide-',
 			numberSimultaneousSlides: 1,
 			effectTime: 150,
-			templatesUrl: 'assets/templates.html',
-			templatesCultureUrl: 'assets/cultures/templates_cultures_##CULTURE##.json',
+			templatesUrl: 'jquery.sliceslide.templates.html',
+			templatesCultureUrl: 'sliceslide_cultures/jquery.sliceslide.##CULTURE##.json',
 			idSliceSlideTemplates: 'jquery-slice-slide-templates',
 			slideTime: 3,
 			culture: $('html').attr('lang') || 'en'
