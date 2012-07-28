@@ -8,7 +8,25 @@
 
 <script src="assets/libs/jquery-1.7.1.min.js" type="text/javascript"></script>
 <script src="assets/libs/underscore.js" type="text/javascript"></script>
-<script src="assets/SL_JS_jquery_slideshow.js" type="text/javascript"></script>
+<script src="jquery.sliceslide-4.0.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	jQuery(document).ready(function () {
+		// Some fixes for IE8 and earlier
+		jQuery('.slice-slides-2 .slide:nth-child(even)').addClass('slide-odd');
+
+		// Slides!
+		jQuery.fn.sliceSlide();
+
+		// Slides!
+		jQuery.fn.sliceSlide({
+			slidesBox: '[data-slice-slide-box-twins]',
+			templatesControls: '#slice-slide-controls-only-text',
+			numberSimultaneousSlides: 2
+		});
+		
+	});
+</script>
 <!--[if lte IE 8]>
 <script type="text/javascript">
 	_.mixin({
