@@ -196,7 +196,7 @@ jQuery(document).ready(function () {
 			controls: function () {
 				var self = this,
 					pagesNumber = Math.ceil(self.el.slides.length / op.numberSimultaneousSlides);
-				self.el.slidesBox.prepend(self.tmpl(op.templatesControls, {id: self.el.idSlideBox, slides: self.el.slides, pagesNumber: pagesNumber, numberSimultaneousSlides: op.numberSimultaneousSlides, text: self.culture}));
+				self.el.slidesBox.prepend(self.tmpl(op.templatesControls, {id: self.el.idSlideBox, slides: self.el.slides, pagesNumber: pagesNumber, numberSimultaneousSlides: op.numberSimultaneousSlides, text: self.culture, root: op.root}));
 				self.startSlide();
 			},
 
