@@ -1,3 +1,18 @@
+﻿/*
+ * SliceSlide - jQuery and Underscore plugin for slideshows
+ *
+ * Copyright (c) 2012 Antonio Rodríguez Ruiz
+ *
+ * Licensed under the MIT license:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *
+ * Project home:
+ *   http://outbook.es
+ *
+ * Version:  4.0.0
+ *
+ */
+
 (function($){
 	$.fn.sliceSlide = function (options, extendedFn) {
 		_.templateSettings = {
@@ -104,10 +119,10 @@
 						controlContainerNext = controlContainer.next(op.slidesBoxControlsFixed),
 						controlContainerSiblings = controlContainer.siblings(op.slidesBoxControlsFixed);
 					
-					if (event.shiftKey && event.keyCode == self.keys.tab) {
+					if (event.shiftKey && event.keyCode === self.keys.tab) {
 						event.preventDefault();
 						self.el.slideControlsBox.find(op.slidesBoxControlsPrevAndNext).first().find(op.links).first().focus();
-					} else if (!event.shiftKey && event.keyCode == self.keys.tab) {
+					} else if (!event.shiftKey && event.keyCode === self.keys.tab) {
 						event.preventDefault();
 						self.el.slides.filter('[aria-selected="true"]').first().focus();
 					}
