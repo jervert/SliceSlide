@@ -117,12 +117,22 @@
 
 			ariaControlsFixed: function () {
 				var self = this;
+				self.el.fixedLinks.each(function () {
+					var controlContainer = $(this).closest(self.op.slidesBoxControlsFixed),
+						state = false;
+					if (controlContainer.hasClass(self.op.classesActive)) {
+						state = true;
+					}
+					controlContainer.attr({
+							'aria-selected': state
+					});
+				});
 				self.el.fixedLinks.on('keydown', function (event) {
 					var controlContainer = $(this).closest(self.op.slidesBoxControlsFixed),
 						controlContainerPrev = controlContainer.prev(self.op.slidesBoxControlsFixed),
 						controlContainerNext = controlContainer.next(self.op.slidesBoxControlsFixed),
 						controlContainerSiblings = controlContainer.siblings(self.op.slidesBoxControlsFixed);
-					
+
 					if (event.shiftKey && event.keyCode === self.keys.tab) {
 						event.preventDefault();
 						self.el.slideControlsBox.find(self.op.slidesBoxControlsPrevAndNext).first().find(self.op.links).first().focus();
@@ -311,8 +321,12 @@
 					activeSlides = $(destination).siblings(self.op.slidesBoxSlideActive),
 					newActiveSlides;
 
-				selectedInFixed.removeClass(self.op.classesActive);
-				newSelectedInFixed.addClass(self.op.classesActive);
+				selectedInFixed.removeClass(self.op.classesActive).attr({
+					'aria-selected': false
+				});
+				newSelectedInFixed.addClass(self.op.classesActive).attr({
+					'aria-selected': true
+				});
 				
 				if ($(destination).is(':hidden')) {
 					activeSlides.removeClass(self.op.classesActive).attr({
