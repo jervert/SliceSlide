@@ -36,6 +36,23 @@
 	</div>
 </script>
 
+<script type="text/template" id="slice-slide-controls-thumbs">
+	<div class="slide-controls" data-slice-slide-controls>
+		<nav>
+			<p><a class="slide-pause-or-resume" href="#" aria-controls="{{id}}" data-slice-slide-controls-pause-resume><span data-slice-slide-playing>{{text.controlsPause}}</span></a><span class="indented">{{text.controlsGoTo}}:</span></p>
+			<ul data-slice-slide-controls-prev-and-next>
+				<li class="slide-control-previous"><a href="#" aria-controls="{{id}}" data-slice-slide-controls-prev><img src="assets/SL_IMG_controls_previous.png" alt="{{text.controlsPrevious}}" /></a></li>
+				<li class="slide-control-next"><a href="#" aria-controls="{{id}}" data-slice-slide-controls-next><img src="assets/SL_IMG_controls_next.png" alt="{{text.controlsNext}}" /></a></li>
+			</ul>
+			<ul class="clear thumbnail-controls">
+			[[ _.each(slides, function (item, index) { ]]
+				<li class="slide-control-element[[ if ((index + 1) === 1) { ]] slice-slide-active[[ } ]]" data-slice-slide-controls-fixed><a href="#" aria-controls="{{id}}" data-slice-slide-destination="#{{id}}-{{(index + 1)}}"><img src="{{thumbnails[index]}}" alt="{{(index + 1)}}" /></a></li>
+			[[ }); ]]
+			</ul>
+		</nav>
+	</div>
+</script>
+
 <script type="text/template" id="slice-slide-controls-playing">
 	<span data-slice-slide-playing>{{text.controlsPause}}</span>
 </script>

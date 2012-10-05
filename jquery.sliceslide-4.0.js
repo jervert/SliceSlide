@@ -41,6 +41,9 @@
 			attrDestination: 'data-slice-slide-destination',
 			translucentElement: true,
 
+			attrThumb: 'data-thumbnail',
+			thumbnailsInControls: false,
+
 			prefixId: 'jquery-slice-slide-',
 			numberSimultaneousSlides: 1,
 			effectTime: 150,
@@ -65,6 +68,7 @@
 			},
 			init: function () {
 				var self = this;
+				self.op.numberSimultaneousSlides = (self.op.thumbnailsInControls === true) ? 1 : self.op.numberSimultaneousSlides;
 				self.el.slides = self.el.slidesBox.find(self.op.slidesBoxSlide);
 				self.el.idSlideBox = this.getSlidesBoxId();
 				self.el.slidesBox.attr('id', self.el.idSlideBox);
@@ -196,10 +200,21 @@
 				notInitialSlides.hide();
 			},
 
+			getThumbnailsRoutes: function () {
+				var self = this,
+					thumbnails = [];
+				self.el.slides.each(function () {
+					thumbnails.push($(this).attr(self.op.attrThumb));
+				});
+				return thumbnails;
+			},
+			
 			controls: function () {
 				var self = this,
-					pagesNumber = Math.ceil(self.el.slides.length / self.op.numberSimultaneousSlides);
-				self.el.slidesBox.prepend(self.tmpl(self.op.templatesControls, {id: self.el.idSlideBox, slides: self.el.slides, pagesNumber: pagesNumber, numberSimultaneousSlides: self.op.numberSimultaneousSlides, text: self.culture, root: self.op.root}));
+					pagesNumber = Math.ceil(self.el.slides.length / self.op.numberSimultaneousSlides),
+					thumbnails = (self.op.thumbnailsInControls === true) ? self.getThumbnailsRoutes() : null;
+
+				self.el.slidesBox.prepend(self.tmpl(self.op.templatesControls, {id: self.el.idSlideBox, slides: self.el.slides, pagesNumber: pagesNumber, numberSimultaneousSlides: self.op.numberSimultaneousSlides, text: self.culture, root: self.op.root, thumbnails: thumbnails}));
 				self.startSlide();
 			},
 
