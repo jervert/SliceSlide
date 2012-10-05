@@ -83,6 +83,11 @@
 				var self = this;
 				$.each(self.el.slides, function (index, slideObject) {
 					var slide = $(slideObject);
+					slide.attr({
+						'aria-hidden': true
+					}).first().attr({
+						'aria-hidden': false
+					});
 					if (!slide.is('[tabindex="0"]')) {slide.attr('tabindex', '-1');}
 					if (!slide.is('[role="option"]')) {slide.attr('role', 'option');}
 					slide.on('keydown', function (event) {
@@ -113,7 +118,6 @@
 			ariaControlsFixed: function () {
 				var self = this;
 				self.el.fixedLinks.on('keydown', function (event) {
-					//console.log(event.keyCode);
 					var controlContainer = $(this).closest(self.op.slidesBoxControlsFixed),
 						controlContainerPrev = controlContainer.prev(self.op.slidesBoxControlsFixed),
 						controlContainerNext = controlContainer.next(self.op.slidesBoxControlsFixed),
@@ -124,7 +128,7 @@
 						self.el.slideControlsBox.find(self.op.slidesBoxControlsPrevAndNext).first().find(self.op.links).first().focus();
 					} else if (!event.shiftKey && event.keyCode === self.keys.tab) {
 						event.preventDefault();
-						self.el.slides.filter('[aria-selected="true"]').first().focus();
+						self.el.slides.filter('[aria-hidden="false"]').first().focus();
 					}
 
 					if (event.keyCode === self.keys.left || event.keyCode === self.keys.up) {
@@ -311,7 +315,10 @@
 				newSelectedInFixed.addClass(self.op.classesActive);
 				
 				if ($(destination).is(':hidden')) {
-					activeSlides.removeClass(self.op.classesActive).removeAttr('aria-selected').attr('tabindex', '0').fadeOut(self.op.effectTime, function() {
+					activeSlides.removeClass(self.op.classesActive).attr({
+						'tabindex': '0',
+						'aria-hidden': true
+					}).fadeOut(self.op.effectTime, function() {
 						if (self.op.numberSimultaneousSlides > 1) {
 							var nextDestination = $(destination).next(),
 								i=1;
@@ -323,7 +330,10 @@
 						}
 						$(destination).addClass(self.op.classesActive);
 						newActiveSlides = $(destination).add($(destination).siblings(self.op.slidesBoxSlideActive));
-						newActiveSlides.attr({'aria-selected': true, 'tabindex': '0'}).fadeIn(self.op.effectTime, function () {
+						newActiveSlides.attr({
+							'aria-hidden': false,
+							'tabindex': '0'
+						}).fadeIn(self.op.effectTime, function () {
 							if (focus && direction > 0) {
 								newActiveSlides.first().focus();
 							} else if (focus && direction < 0) {
