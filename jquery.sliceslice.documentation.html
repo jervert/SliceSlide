@@ -6,176 +6,161 @@
 </head>
 
 <body>
-<table width="600">
-	<tr>
-		<td><p>slidesBox</p></td>
-		<td>Selector for slides container element</td>
-		<td>slidesBox: '[data-slice-slide-box]'</td>
-	</tr>
-	<tr>
-		<td>slidesBoxSlide</td>
-		<td>Selector for slide element</td>
-		<td>slidesBoxSlide: '[data-slice-slide]'</td>
-	</tr>
-	<tr>
-		<td>slidesBoxSlideActive</td>
-		<td>Selector for active slide element</td>
-		<td>slidesBoxSlideActive: '.slice-slide-active'</td>
-	</tr>
-	<tr>
-		<td>slidesBoxControls</td>
-		<td>Selector for controls container element</td>
-		<td>slidesBoxControls: '[data-slice-slide-controls]'</td>
-	</tr>
-	<tr>
-		<td>slidesBoxControlsFixed</td>
-		<td>Selector for page controls container element</td>
-		<td>slidesBoxControlsFixed: '[data-slice-slide-controls-fixed]'</td>
-	</tr>
-	<tr>
-		<td>slidesBoxControlsPrevAndNext</td>
-		<td>Selector for next / previous controls container element</td>
-		<td>slidesBoxControlsPrevAndNext: '[data-slice-slide-controls-prev-and-next]'</td>
-	</tr>
-	<tr>
-		<td>slidesBoxControlsNext</td>
-		<td>Selector for 'next' control</td>
-		<td>slidesBoxControlsNext: '[data-slice-slide-controls-next]'</td>
-	</tr>
-	<tr>
-		<td>slidesBoxControlsPrev</td>
-		<td>Selector for 'previous' control</td>
-		<td>slidesBoxControlsPrev: '[data-slice-slide-controls-prev]'</td>
-	</tr>
-	<tr>
-		<td>slidesBoxControlsPauseResume</td>
-		<td>Selector for 'pause' / 'resume' control</td>
-		<td>slidesBoxControlsPauseResume: '[data-slice-slide-controls-pause-resume]'</td>
-	</tr>
-	<tr>
-		<td>slidesBoxControlsStatePlaying</td>
-		<td>Selector for text element in 'pause' / 'resume' control</td>
-		<td>slidesBoxControlsStatePlaying: '[data-slice-slide-playing]'</td>
-	</tr>
-	<tr>
-		<td>links</td>
-		<td>Selector for elements acting as a link</td>
-		<td>links: 'a, [role=&quot;link&quot;]'</td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td>templatesTranslucent</td>
-		<td>&nbsp;</td>
-		<td>templatesTranslucent: '#slice-slide-translucent'</td>
-	</tr>
-	<tr>
-		<td>templatesControls</td>
-		<td>&nbsp;</td>
-		<td>templatesControls: '#slice-slide-controls'</td>
-	</tr>
-	<tr>
-		<td>templateControlsPlaying</td>
-		<td>&nbsp;</td>
-		<td><br />
-templateControlsPlaying: '#slice-slide-controls-playing'</td>
-	</tr>
-	<tr>
-		<td>templateControlsPaused</td>
-		<td>&nbsp;</td>
-		<td>templateControlsPaused: '#slice-slide-controls-paused'</td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td>classesActive</td>
-		<td>&nbsp;</td>
-		<td>classesActive: 'slice-slide-active'</td>
-	</tr>
-	<tr>
-		<td>attrDestination</td>
-		<td>&nbsp;</td>
-		<td><br />
-attrDestination: 'data-slice-slide-destination'</td>
-	</tr>
-	<tr>
-		<td>translucentElement</td>
-		<td>&nbsp;</td>
-		<td>translucentElement: true</td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td>prefixId</td>
-		<td>&nbsp;</td>
-		<td>prefixId: 'jquery-slice-slide-'</td>
-	</tr>
-	<tr>
-		<td>numberSimultaneousSlides</td>
-		<td>&nbsp;</td>
-		<td>numberSimultaneousSlides: 1</td>
-	</tr>
-	<tr>
-		<td>effectTime</td>
-		<td>Time for effects between slides, in miliseconds</td>
-		<td>effectTime: 150</td>
-	</tr>
-	<tr>
-		<td>templatesUrl</td>
-		<td>URL for templates file.</td>
-		<td><br />
-templatesUrl: 'jquery.sliceslide.templates.html'</td>
-	</tr>
-	<tr>
-		<td>templatesCultureUrl</td>
-		<td>URL for localization files. ##CULTURE## will be replaced by the selected localization.</td>
-		<td>templatesCultureUrl: 'sliceslide_cultures/jquery.sliceslide.##CULTURE##.json'</td>
-	</tr>
-	<tr>
-		<td>idSliceSlideTemplates</td>
-		<td>&nbsp;</td>
-		<td>idSliceSlideTemplates: 'jquery-slice-slide-templates'</td>
-	</tr>
-	<tr>
-		<td>slideTime</td>
-		<td>Time between slide change, in seconds</td>
-		<td>slideTime: 3</td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td>culture: $('html').attr('lang') || 'en'</td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-	</tr>
+<table>
+	<col width="20%" />
+	<col width="40%" />
+	<col width="40%" />
+	<thead>
+		<tr>
+			<th scope="col">Option</th>
+			<th scope="col">Description</th>
+			<th scope="col">Example</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><p>slidesBox</p></td>
+			<td>Selector for slides container element</td>
+			<td>slidesBox: '[data-slice-slide-box]'</td>
+		</tr>
+		<tr>
+			<td>slidesBoxSlide</td>
+			<td>Selector for slide element</td>
+			<td><pre>slidesBoxSlide: '[data-slice-slide]'</pre></td>
+		</tr>
+		<tr>
+			<td>slidesBoxSlideActive</td>
+			<td>Selector for active slide element</td>
+			<td><pre>slidesBoxSlideActive: '.slice-slide-active'</pre></td>
+		</tr>
+		<tr>
+			<td>slidesBoxControls</td>
+			<td>Selector for controls container element</td>
+			<td><pre>slidesBoxControls: '[data-slice-slide-controls]'</pre></td>
+		</tr>
+		<tr>
+			<td>slidesBoxControlsFixed</td>
+			<td>Selector for page controls container element</td>
+			<td><pre>slidesBoxControlsFixed: '[data-slice-slide-controls-fixed]'</pre></td>
+		</tr>
+		<tr>
+			<td>slidesBoxControlsPrevAndNext</td>
+			<td>Selector for next / previous controls container element</td>
+			<td><pre>slidesBoxControlsPrevAndNext: '[data-slice-slide-controls-prev-and-next]'</pre></td>
+		</tr>
+		<tr>
+			<td>slidesBoxControlsNext</td>
+			<td>Selector for 'next' control</td>
+			<td><pre>slidesBoxControlsNext: '[data-slice-slide-controls-next]'</pre></td>
+		</tr>
+		<tr>
+			<td>slidesBoxControlsPrev</td>
+			<td>Selector for 'previous' control</td>
+			<td><pre>slidesBoxControlsPrev: '[data-slice-slide-controls-prev]'</pre></td>
+		</tr>
+		<tr>
+			<td>slidesBoxControlsPauseResume</td>
+			<td>Selector for 'pause' / 'resume' control</td>
+			<td><pre>slidesBoxControlsPauseResume: '[data-slice-slide-controls-pause-resume]'</pre></td>
+		</tr>
+		<tr>
+			<td>slidesBoxControlsStatePlaying</td>
+			<td>Selector for text element in 'pause' / 'resume' control</td>
+			<td><pre>slidesBoxControlsStatePlaying: '[data-slice-slide-playing]'</pre></td>
+		</tr>
+		<tr>
+			<td>links</td>
+			<td>Selector for elements acting as a link</td>
+			<td><pre>links: 'a, [role=&quot;link&quot;]'</pre></td>
+		</tr>
+		<tr>
+			<td>templatesTranslucent</td>
+			<td>&nbsp;</td>
+			<td><pre>templatesTranslucent: '#slice-slide-translucent'</pre></td>
+		</tr>
+		<tr>
+			<td>templatesControls</td>
+			<td>&nbsp;</td>
+			<td><pre>templatesControls: '#slice-slide-controls'</pre></td>
+		</tr>
+		<tr>
+			<td>templateControlsPlaying</td>
+			<td>&nbsp;</td>
+			<td><pre>templateControlsPlaying: '#slice-slide-controls-playing'</pre></td>
+		</tr>
+		<tr>
+			<td>templateControlsPaused</td>
+			<td>&nbsp;</td>
+			<td><pre>templateControlsPaused: '#slice-slide-controls-paused'</pre></td>
+		</tr>
+		<tr>
+			<td>classesActive</td>
+			<td>&nbsp;</td>
+			<td><pre>classesActive: 'slice-slide-active'</pre></td>
+		</tr>
+		<tr>
+			<td>attrDestination</td>
+			<td>&nbsp;</td>
+			<td><pre>attrDestination: 'data-slice-slide-destination'</pre></td>
+		</tr>
+		<tr>
+			<td>translucentElement</td>
+			<td>&nbsp;</td>
+			<td><pre>translucentElement: true</pre></td>
+		</tr>
+		<tr>
+			<td>attrThumb</td>
+			<td>Thumbnails images url attribute</td>
+			<td>attrThumb: 'data-thumbnail'</td>
+		</tr>
+		<tr>
+			<td>thumbnailsInControls</td>
+			<td>Show thumbnails in controls</td>
+			<td>thumbnailsInControls: false</td>
+		</tr>
+		
+			
+		<tr>
+			<td>prefixId</td>
+			<td>&nbsp;</td>
+			<td><pre>prefixId: 'jquery-slice-slide-'</pre></td>
+		</tr>
+		<tr>
+			<td>numberSimultaneousSlides</td>
+			<td>&nbsp;</td>
+			<td><pre>numberSimultaneousSlides: 1</pre></td>
+		</tr>
+		<tr>
+			<td>effectTime</td>
+			<td>Time for effects between slides, in miliseconds</td>
+			<td><pre>effectTime: 150</pre></td>
+		</tr>
+		<tr>
+			<td>templatesUrl</td>
+			<td>URL for templates file.</td>
+			<td><pre>templatesUrl: 'jquery.sliceslide.templates.html'</pre></td>
+		</tr>
+		<tr>
+			<td>templatesCultureUrl</td>
+			<td>URL for localization files. ##CULTURE## will be replaced by the selected localization.</td>
+			<td><pre>templatesCultureUrl: 'sliceslide_cultures/jquery.sliceslide.##CULTURE##.json'</pre></td>
+		</tr>
+		<tr>
+			<td>idSliceSlideTemplates</td>
+			<td>&nbsp;</td>
+			<td><pre>idSliceSlideTemplates: 'jquery-slice-slide-templates'</pre></td>
+		</tr>
+		<tr>
+			<td>slideTime</td>
+			<td>Time between slide change, in seconds</td>
+			<td><pre>slideTime: 3</pre></td>
+		</tr>
+		<tr>
+			<td>culture</td>
+			<td>Specific language code</td>
+			<td>culture: $('html').attr('lang') || 'en'</td>
+		</tr>
+	</tbody>
 </table>
-<p><br />
-	<br />
-	<br />
-</p>
-<p><br />
-	<br />
-</p>
-<p><br />
-</p>
-<p><br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-</p>
 </body>
 </html>
