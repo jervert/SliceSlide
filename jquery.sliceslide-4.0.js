@@ -400,7 +400,7 @@
 					initSliceSlides(cultureContent);
 				});
 			});
-		} else {console.log(op)
+		} else {
 			initSliceSlides(op.templatesCultureJson);
 		}
 	};
