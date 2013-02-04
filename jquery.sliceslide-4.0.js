@@ -49,6 +49,7 @@
 			effectTime: 150,
 			templatesUrl: 'jquery.sliceslide.templates.html',
 			templatesCultureUrl: 'sliceslide_cultures/jquery.sliceslide.##CULTURE##.json',
+			templatesCultureJson: false,
 			idSliceSlideTemplates: 'jquery-slice-slide-templates',
 			slideTime: 3,
 			culture: $('html').attr('lang') || 'en'
@@ -399,8 +400,8 @@
 					initSliceSlides(cultureContent);
 				});
 			});
-		} else {
-			initSliceSlides(cultureContent);
+		} else {console.log(op)
+			initSliceSlides(op.templatesCultureJson);
 		}
 	};
 }(jQuery));
