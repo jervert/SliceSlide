@@ -80,17 +80,17 @@
 				"controlsPrevious": "Vorig",
 				"controlsNext": "Volgende"
 			}
-		},
-		  documentLang = $('html').attr('lang');
+		};
+
 		// Slides!
-		jQuery.fn.sliceSlide({templatesCultureJson: cultures[documentLang]});
+		jQuery.fn.sliceSlide({templatesCultureJson: cultures});
 
 		// Slides!
 		jQuery.fn.sliceSlide({
 			slidesBox: '[data-slice-slide-box-twins]',
 			templatesControls: '#slice-slide-controls-only-text',
 			numberSimultaneousSlides: 2,
-			templatesCultureJson: cultures[documentLang]
+			templatesCultureJson: cultures
 		});
 
 		// Slides!
@@ -98,7 +98,7 @@
 			slidesBox: '[data-slice-slide-box-thumbs]',
 			thumbnailsInControls: true,
 			templatesControls: '#slice-slide-controls-thumbs',
-			templatesCultureJson: cultures[documentLang]
+			templatesCultureJson: cultures
 		});
 		
 	});

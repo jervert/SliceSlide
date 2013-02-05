@@ -51,6 +51,13 @@
 			templatesUrl: 'jquery.sliceslide.templates.html',
 			templatesCultureUrl: 'sliceslide_cultures/jquery.sliceslide.##CULTURE##.json',
 			templatesCultureJson: null,
+			fallbackCultureJson: {
+				"controlsPause": "Pause",
+				"controlsResume": "Resume",
+				"controlsGoTo": "Go to",
+				"controlsPrevious": "Previous",
+				"controlsNext": "Next"
+			},
 			idSliceSlideTemplates: 'jquery-slice-slide-templates',
 			slideTime: 3,
 			culture: $('html').attr('lang') || 'en'
@@ -401,7 +408,13 @@
 
 		function questionCultures () {
 			if (_.isObject(op.templatesCultureJson)) {
-				initSliceSlides(op.templatesCultureJson);
+				var selectedCulture;
+				if (_.isObject(op.templatesCultureJson[op.culture])) {
+					selectedCulture = op.templatesCultureJson[op.culture]
+				} else {
+					selectedCulture = op.fallbackCultureJson;
+				}
+				initSliceSlides(selectedCulture);
 			} else {
 				getCulturesJson();
 			}
