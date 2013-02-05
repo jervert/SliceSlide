@@ -19,6 +19,7 @@
 			interpolate: /\{\{(.+?)\}\}/g,
 			evaluate: /\[\[(.+?)\]\]/g
 		};
+
 		var fnBase, defaults = {
 			slidesBox: '[data-slice-slide-box]',
 			slidesBoxSlide: '[data-slice-slide]',
@@ -49,7 +50,7 @@
 			effectTime: 150,
 			templatesUrl: 'jquery.sliceslide.templates.html',
 			templatesCultureUrl: 'sliceslide_cultures/jquery.sliceslide.##CULTURE##.json',
-			templatesCultureJson: false,
+			templatesCultureJson: null,
 			idSliceSlideTemplates: 'jquery-slice-slide-templates',
 			slideTime: 3,
 			culture: $('html').attr('lang') || 'en'
@@ -392,16 +393,27 @@
 			});
 		}
 
+		function getCulturesJson () {
+			$.getJSON(op.templatesCultureUrl.replace('##CULTURE##', op.culture), function (json) {
+				initSliceSlides(json);
+			});
+		}
+
+		function questionCultures () {
+			if (_.isObject(op.templatesCultureJson)) {
+				initSliceSlides(op.templatesCultureJson);
+			} else {
+				getCulturesJson();
+			}
+		}
+
 		if ($('#' + op.idSliceSlideTemplates).length === 0) {
 			$.get(op.templatesUrl, function (data) {
 				$('body').append('<div id="' + op.idSliceSlideTemplates + '">' + data + '</div>');
-				$.getJSON(op.templatesCultureUrl.replace('##CULTURE##', op.culture), function (json) {
-					cultureContent = json;
-					initSliceSlides(cultureContent);
-				});
+				questionCultures();
 			});
 		} else {
-			initSliceSlides(op.templatesCultureJson);
+			questionCultures();
 		}
 	};
 }(jQuery));

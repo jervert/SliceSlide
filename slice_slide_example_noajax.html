@@ -15,9 +15,6 @@
 		// Some fixes for IE8 and earlier
 		jQuery('.slice-slides-2 .slide:nth-child(even)').addClass('slide-odd');
 
-		// Slides!
-		jQuery.fn.sliceSlide();
-
 		// Noajax cultures
 		var cultures = {
 			ca: {
@@ -85,6 +82,8 @@
 			}
 		},
 		  documentLang = $('html').attr('lang');
+		// Slides!
+		jQuery.fn.sliceSlide({templatesCultureJson: cultures[documentLang]});
 
 		// Slides!
 		jQuery.fn.sliceSlide({
