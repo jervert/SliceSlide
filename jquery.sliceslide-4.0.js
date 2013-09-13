@@ -1,7 +1,7 @@
 ﻿/*
  * SliceSlide - jQuery and Underscore plugin for slideshows
  *
- * Copyright (c) 2012 Antonio Rodríguez Ruiz
+ * Copyright (c) 2013 Antonio Rodríguez Ruiz
  *
  * Licensed under the MIT license:
  *   http://www.opensource.org/licenses/mit-license.php
@@ -9,7 +9,7 @@
  * Project home:
  *   http://outbook.es
  *
- * Version:  4.0.0
+ * Version:  4.0.2
  *
  */
 
@@ -48,6 +48,8 @@
 			prefixId: 'jquery-slice-slide-',
 			numberSimultaneousSlides: 1,
 			effectTime: 150,
+			autoStart: true,
+      loop: true,
 			templatesUrl: 'jquery.sliceslide.templates.html',
 			templatesCultureUrl: 'sliceslide_cultures/jquery.sliceslide.##CULTURE##.json',
 			templatesCultureJson: null,
@@ -236,19 +238,29 @@
 				var self = this;
 				self.el.slideControlsBox = self.el.slidesBox.find(self.op.slidesBoxControls).first();
 				self.el.slideControls = self.getSlideControls();
+
+				if (!self.op.loop) {
+          self.el.slideControls.previous.hide();
+        }
 	
 				self.eventControlsNextAndPrevious();
 				self.eventControlsFixed();
-				self.eventControlsPauseResume();	
+        if (self.op.autoStart) {
+				  self.eventControlsPauseResume();	
+        } else {
+        	self.el.slideControls.pauseResume.remove();
+        }
 
 				self.startInterval();		
 			},
 
 			startInterval: function () {
 				var self = this;
-				self.el.interval = setInterval(function () {
-					self.changeSlide(1);
-				}, self.el.intervalTime);
+				if (self.op.autoStart) {
+					self.el.interval = setInterval(function () {
+						self.changeSlide(1);
+					}, self.el.intervalTime);
+				}
 			},
 
 			getSlideControls: function () {
@@ -327,13 +339,27 @@
 					} else {
 						newSelectedInFixed = selectedInFixed.next();
 					}
+					if (!self.op.loop) {
+            self.el.slideControls.previous.show()
+          }
 				} else {
 					if (selectedInFixed.is(':first-child')) {
 						newSelectedInFixed = selectedInFixed.siblings().last();
 					} else {
 						newSelectedInFixed = selectedInFixed.prev();
 					}
+					if (!self.op.loop) {
+            self.el.slideControls.next.show()
+          }
 				}
+
+				if (!self.op.loop) {
+          if (newSelectedInFixed.is(':last-child')) {
+            self.el.slideControls.next.hide();
+          } else if (newSelectedInFixed.is(':first-child')) {
+            self.el.slideControls.previous.hide();
+          }
+        }
 			
 				link = newSelectedInFixed.find(self.op.links).first();
 				destination = link.attr(self.op.attrDestination);
