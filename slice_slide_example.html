@@ -16,7 +16,10 @@
 		jQuery('.slice-slides-2 .slide:nth-child(even)').addClass('slide-odd');
 
 		// Slides!
-		jQuery.fn.sliceSlide();
+		jQuery.fn.sliceSlide({
+			autoStart:false,
+			loop: false
+		});
 
 		// Slides!
 		jQuery.fn.sliceSlide({

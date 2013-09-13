@@ -83,7 +83,11 @@
 		};
 
 		// Slides!
-		jQuery.fn.sliceSlide({templatesCultureJson: cultures});
+		jQuery.fn.sliceSlide({
+			templatesCultureJson: cultures,
+			autoStart:false,
+			loop: false
+		});
 
 		// Slides!
 		jQuery.fn.sliceSlide({
