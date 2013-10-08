@@ -222,7 +222,8 @@
 			
 			controls: function () {
 				var self = this,
-					pagesNumber = Math.ceil(self.el.slides.length / self.op.numberSimultaneousSlides),
+          pagesNumberRaw = self.el.slides.length / self.op.numberSimultaneousSlides, //
+					pagesNumber = Math.ceil(pagesNumberRaw),
 					thumbnails = (self.op.thumbnailsInControls === true) ? self.getThumbnailsRoutes() : null;
 
 				self.el.slidesBox.prepend(self.tmpl(self.op.templatesControls, {id: self.el.idSlideBox, slides: self.el.slides, pagesNumber: pagesNumber, numberSimultaneousSlides: self.op.numberSimultaneousSlides, text: self.culture, root: self.op.root, thumbnails: thumbnails}));
@@ -297,6 +298,18 @@
 					var newSelectedInFixed = $(this).closest(self.op.slidesBoxControlsFixed),
 						selectedInFixed = newSelectedInFixed.siblings(self.op.slidesBoxSlideActive);
 					self.pauseSlide();
+          if (!self.op.loop) {
+            if (newSelectedInFixed.is(':first-child')) {
+              self.el.slideControls.previous.hide()
+            } else {
+              self.el.slideControls.previous.show()
+            }
+            if (newSelectedInFixed.is(':last-child')) {
+              self.el.slideControls.next.hide()
+            } else {
+              self.el.slideControls.next.show()
+            }
+          }
 					self.goToSlide($(this), $(this).attr(self.op.attrDestination), newSelectedInFixed, selectedInFixed, 1, true);
 				});
 				self.ariaControlsFixed();
