@@ -890,5 +890,4 @@
       questionCultures();
     }
   };
->>>>>>> removed controls when unnecessary
 }(jQuery));
