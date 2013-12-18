@@ -88,16 +88,21 @@
           }
         },
 
+        addAriaAttributes: function (element) {
+          var attributes = {};
+          if (!element.is('[tabindex="0"]')) {
+            attributes.tabindex = '0';
+          }
+          if (!element.is('[role="option"]')) {
+            attributes.role = 'option';
+          }
+          element.attr(attributes);
+        },
         ariaSlides: function () {
           var self = this;
           $.each(self.el.slides, function (index, slideObject) {
             var slide = $(slideObject);
-            if (!slide.is('[tabindex="0"]')) {
-              slide.attr('tabindex', '-1');
-            }
-            if (!slide.is('[role="option"]')) {
-              slide.attr('role', 'option');
-            }
+            self.addAriaAttributes(slide);
             slide.on('keydown', function (event) {
               if (event.keyCode === self.keys.left || event.keyCode === self.keys.up) {
                 event.preventDefault();
