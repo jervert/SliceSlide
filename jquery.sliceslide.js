@@ -260,25 +260,32 @@
           };
         },
 
+        isVisible: function (element) {
+          return $(element).is(':visible');
+        },
+
         eventControlsNextAndPrevious: function () {
           var self = this,
-            slideControlsEvent = 'click.sliceControls';
+            slideControlsEvent = 'click.sliceControls',
+            controlPrevious = self.el.slideControls.previous,
+            controlNext = self.el.slideControls.next;
           if ($.isTouchCapable()) {
             self.el.slides.off('swipe.slides').on('swipe.slides', function (ev, touch) {
-              if (touch.direction === 'right') {
+              if (touch.direction === 'right' && self.isVisible(controlPrevious)) {
                 self.launchChangeSlide(ev, -1);
-              } else if (touch.direction === 'left') {
+              } else if (touch.direction === 'left' && self.isVisible(controlNext)) {
                 self.launchChangeSlide(ev, 1);
               }
             });
           }
-          self.el.slideControls.previous.off(slideControlsEvent).on(slideControlsEvent, function (ev) {
+          controlPrevious.off(slideControlsEvent).on(slideControlsEvent, function (ev) {
             self.launchChangeSlide(ev, -1);
           });
-          self.el.slideControls.next.off(slideControlsEvent).on(slideControlsEvent, function (ev) {
+          controlNext.off(slideControlsEvent).on(slideControlsEvent, function (ev) {
             self.launchChangeSlide(ev, 1);
           });
         },
+
         launchChangeSlide: function (ev, direction) {
           ev.preventDefault();
           this.pauseSlide();
