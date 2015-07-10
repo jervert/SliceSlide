@@ -130,7 +130,6 @@
         ariaControlsFixed: function () {
           var self = this;
           self.el.fixedLinks.on('keydown', function (event) {
-            //console.log(event.keyCode);
             var controlContainer = $(this).closest(op.slidesBoxControlsFixed),
               controlContainerPrev = controlContainer.prev(op.slidesBoxControlsFixed),
               controlContainerNext = controlContainer.next(op.slidesBoxControlsFixed),
