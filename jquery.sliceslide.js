@@ -57,6 +57,7 @@
       slideTime: 3,
       culture: $('html').attr('lang') || 'en'
     },
+      self,
       op = $.extend(true, {}, defaults, options),
 
       defaultFn = {
@@ -71,7 +72,7 @@
           left: 37
         },
         init: function () {
-          var self = this;
+          self = this;
           self.op.numberSimultaneousSlides = (self.op.thumbnailsInControls) ? 1 : self.op.numberSimultaneousSlides;
           self.el.slides = self.el.slidesBox.find(op.slidesBoxSlide);
           self.el.idSlideBox = this.getSlidesBoxId();
@@ -83,7 +84,6 @@
         },
 
         ariaSlideBox: function () {
-          var self = this;
           if (!self.el.slidesBox.is('[role="listbox"]')) {
             self.el.slidesBox.attr('role', 'listbox');
           }
@@ -100,7 +100,6 @@
           element.attr(attributes);
         },
         ariaSlides: function () {
-          var self = this;
           $.each(self.el.slides, function (index, slideObject) {
             var slide = $(slideObject);
             self.addAriaAttributes(slide);
@@ -129,7 +128,6 @@
         },
 
         ariaControlsFixed: function () {
-          var self = this;
           self.el.fixedLinks.on('keydown', function (event) {
             var controlContainer = $(this).closest(op.slidesBoxControlsFixed),
               controlContainerPrev = controlContainer.prev(op.slidesBoxControlsFixed),
@@ -180,7 +178,6 @@
         },
 
         setSlides: function () {
-          var self = this;
           self.el.slides.each(function (index, slide) {
             $(slide).attr('id', self.el.idSlideBox + '-' + (index + 1));
             if (op.translucentElement) {
@@ -219,12 +216,10 @@
         },
 
         getControls: function (controls) {
-          var self = this;
           return self.el.slideControlsBox.find(controls);
         },
 
         startSlide: function () {
-          var self = this;
           self.el.slideControlsBox = self.el.slidesBox.find(op.slidesBoxControls).first();
           self.el.slideControls = self.getSlideControls();
 
@@ -239,7 +234,6 @@
         },
 
         afterStartSlide: function () {
-          var self = this;
           self.eventControlsNextAndPrevious();
           self.eventControlsFixed();
           self.eventControlsPauseResume();
@@ -248,7 +242,6 @@
 
         startInterval: function () {
           if (op.autoStart) {
-            var self = this;
             self.el.interval = setInterval(function () {
               self.changeSlide(1);
             }, self.el.intervalTime);
@@ -256,7 +249,6 @@
         },
 
         getSlideControls: function () {
-          var self = this;
           return {
             fixed: self.getControls(op.slidesBoxControlsFixed),
             previous: self.getControls(op.slidesBoxControlsPrev),
@@ -270,8 +262,7 @@
         },
 
         eventControlsNextAndPrevious: function () {
-          var self = this,
-            slideControlsEvent = 'click.sliceControls',
+          var slideControlsEvent = 'click.sliceControls',
             controlPrevious = self.el.slideControls.previous,
             controlNext = self.el.slideControls.next;
           if ($.isTouchCapable()) {
@@ -298,8 +289,6 @@
         },
 
         eventControlsFixed: function () {
-          var self = this;
-
           self.el.fixedLinks = self.el.slideControls.fixed.find(op.links);
 
           self.el.fixedLinks.on('click', function (event) {
@@ -313,7 +302,6 @@
         },
 
         eventControlsPauseResume: function () {
-          var self = this;
           self.el.slideControls.pauseResume.bind('click', function (event) {
             event.preventDefault();
             if (self.el.slideControls.pauseResume.find(op.slidesBoxControlsStatePlaying).length > 0) {
@@ -326,19 +314,16 @@
         },
 
         resumeSlide: function () {
-          var self = this;
           self.startInterval();
         },
 
         pauseSlide: function () {
-          var self = this;
           clearInterval(self.el.interval);
           self.el.slideControls.pauseResume.html(self.tmpl(op.templateControlsPaused, {text: self.culture}));
         },
 
         changeSlide: function (direction, focus) {
-          var self = this,
-            newSelectedInFixed,
+          var newSelectedInFixed,
             link,
             destination,
             selectedInFixed = self.el.slideControlsBox.find(op.slidesBoxSlideActive).first();
