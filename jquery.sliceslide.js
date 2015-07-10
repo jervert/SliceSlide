@@ -233,7 +233,11 @@
           if (!op.autoStart) {
             self.el.slideControls.pauseResume.remove();
           }
+          
+          afterStartSlide();
+        },
 
+        afterStartSlide: function () {
           self.eventControlsNextAndPrevious();
           self.eventControlsFixed();
           self.eventControlsPauseResume();
