@@ -235,10 +235,11 @@
             self.el.slideControls.pauseResume.remove();
           }
           
-          afterStartSlide();
+          self.afterStartSlide();
         },
 
         afterStartSlide: function () {
+          var self = this;
           self.eventControlsNextAndPrevious();
           self.eventControlsFixed();
           self.eventControlsPauseResume();
