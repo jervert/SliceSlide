@@ -16,10 +16,6 @@
 
 (function($) {
   $.fn.sliceSlide = function (options, extendedFn) {
-    _.templateSettings = {
-      interpolate: /\{\{(.+?)\}\}/g,
-      evaluate: /\[\[(.+?)\]\]/g
-    };
     var fnBase, defaults = {
       slidesBox: '[data-slice-slide-box]',
       slidesBoxSlide: '[data-slice-slide]',
@@ -54,6 +50,11 @@
       templatesCultureUrl: 'sliceslide_cultures/jquery.sliceslide.##CULTURE##.json',
       idSliceSlideTemplates: 'jquery-slice-slide-templates',
       slideTemplatesPlaceholder: true,
+      setTemplateSettings: true,
+      templateSettings: {
+        interpolate: /\{\{(.+?)\}\}/g,
+        evaluate: /\[\[(.+?)\]\]/g
+      },
       slideTime: 3,
       culture: $('html').attr('lang') || 'en'
     },
@@ -77,10 +78,17 @@
           self.el.slides = self.el.slidesBox.find(op.slidesBoxSlide);
           self.el.idSlideBox = this.getSlidesBoxId();
           self.el.slidesBox.attr('id', self.el.idSlideBox);
+          self.setTemplateSettings();
           self.ariaSlideBox();
           self.ariaSlides();
           self.setSlides(); // Activate initial slides, and hide all other
           self.controls(); // Play-Pause and slide number controls
+        },
+
+        setTemplateSettings: function () {
+          if (op.setTemplateSettings) {
+            _.templateSettings = op.templateSettings;
+          }
         },
 
         ariaSlideBox: function () {
