@@ -76,7 +76,7 @@
           self = this;
           self.op.numberSimultaneousSlides = (self.op.thumbnailsInControls) ? 1 : self.op.numberSimultaneousSlides;
           self.el.slides = self.el.slidesBox.find(op.slidesBoxSlide);
-          self.el.idSlideBox = this.getSlidesBoxId();
+          self.el.idSlideBox = self.getSlidesBoxId();
           self.el.slidesBox.attr('id', self.el.idSlideBox);
           self.setTemplateSettings();
           self.ariaSlideBox();
@@ -171,8 +171,7 @@
         },
 
         getSlidesBoxId: function () {
-          var self = this,
-            idSlideBox = op.prefixId + (self.el.slidesBoxIndex + 1);
+          var idSlideBox = op.prefixId + (self.el.slidesBoxIndex + 1);
           while ($('#' + idSlideBox).length) {
             self.el.slidesBoxIndex += 1;
             idSlideBox = op.prefixId + (self.el.slidesBoxIndex + 1);
@@ -196,8 +195,7 @@
         },
 
         initialSlides: function () {
-          var self = this,
-            allSlides = self.el.slidesBox.find(op.slidesBoxSlide),
+          var allSlides = self.el.slidesBox.find(op.slidesBoxSlide),
             initialSlides = allSlides.filter(':lt(' + op.numberSimultaneousSlides + ')'),
             notInitialSlides = allSlides.filter(':gt(' + (op.numberSimultaneousSlides - 1) + ')');
           initialSlides.addClass(op.classesActive);
@@ -205,8 +203,7 @@
         },
 
         getThumbnailsRoutes: function () {
-          var self = this,
-            thumbnails = [];
+          var thumbnails = [];
           self.el.slides.each(function () {
             thumbnails.push($(this).attr(self.op.attrThumb));
           });
@@ -214,8 +211,7 @@
         },
 
         controls: function () {
-          var self = this,
-            pagesNumberRaw = (self.el.slides.length) / (self.op.numberSimultaneousSlides),
+          var pagesNumberRaw = (self.el.slides.length) / (self.op.numberSimultaneousSlides),
             pagesNumber = Math.ceil(pagesNumberRaw),
             thumbnails = (self.op.thumbnailsInControls === true) ? self.getThumbnailsRoutes() : null;
 
@@ -292,8 +288,8 @@
 
         launchChangeSlide: function (ev, direction) {
           ev.preventDefault();
-          this.pauseSlide();
-          this.changeSlide(direction);
+          self.pauseSlide();
+          self.changeSlide(direction);
         },
 
         eventControlsFixed: function () {
@@ -374,8 +370,7 @@
           selectedInFixed.removeClass(op.classesActive);
           newSelectedInFixed.addClass(op.classesActive);
 
-          var self = this,
-            activeSlides = $(destination).siblings(op.slidesBoxSlideActive),
+          var activeSlides = $(destination).siblings(op.slidesBoxSlideActive),
             newActiveSlides;
 
           if ($(destination).is(':hidden')) {
