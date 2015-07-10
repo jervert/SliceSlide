@@ -290,15 +290,16 @@
 
         eventControlsFixed: function () {
           self.el.fixedLinks = self.el.slideControls.fixed.find(op.links);
-
-          self.el.fixedLinks.on('click', function (event) {
-            event.preventDefault();
-            var newSelectedInFixed = $(this).closest(op.slidesBoxControlsFixed),
-              selectedInFixed = newSelectedInFixed.siblings(op.slidesBoxSlideActive);
-            self.pauseSlide();
-            self.goToSlide($(this), $(this).attr(op.attrDestination), newSelectedInFixed, selectedInFixed, 1, true);
-          });
+          self.el.fixedLinks.on('click', self.clickFixedLink);
           self.ariaControlsFixed();
+        },
+
+        clickFixedLink: function (ev) {
+          ev.preventDefault();
+          var newSelectedInFixed = $(this).closest(op.slidesBoxControlsFixed),
+            selectedInFixed = newSelectedInFixed.siblings(op.slidesBoxSlideActive);
+          self.pauseSlide();
+          self.goToSlide($(this), $(this).attr(op.attrDestination), newSelectedInFixed, selectedInFixed, 1, true);
         },
 
         eventControlsPauseResume: function () {
