@@ -207,7 +207,7 @@
 
         controls: function () {
           var self = this,
-            pagesNumberRaw = self.el.slides.length / self.op.numberSimultaneousSlides, //
+            pagesNumberRaw = (self.el.slides.length) / (self.op.numberSimultaneousSlides),
             pagesNumber = Math.ceil(pagesNumberRaw),
             thumbnails = (self.op.thumbnailsInControls === true) ? self.getThumbnailsRoutes() : null;
 
