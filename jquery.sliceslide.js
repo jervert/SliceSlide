@@ -53,6 +53,7 @@
       templatesUrl: 'jquery.sliceslide.templates.html',
       templatesCultureUrl: 'sliceslide_cultures/jquery.sliceslide.##CULTURE##.json',
       idSliceSlideTemplates: 'jquery-slice-slide-templates',
+      slideTemplatesPlaceholder: true,
       slideTime: 3,
       culture: $('html').attr('lang') || 'en'
     },
@@ -453,11 +454,15 @@
       }
     }
 
-    if ($('#' + op.idSliceSlideTemplates).length === 0) {
+    function retrieveTemplates () {
       $.get(op.templatesUrl, function (data) {
         $('body').append('<div id="' + op.idSliceSlideTemplates + '">' + data + '</div>');
         questionCultures();
       });
+    }
+
+    if (op.slideTemplatesPlaceholder && $('#' + op.idSliceSlideTemplates).length === 0) {
+      retrieveTemplates();
     } else {
       questionCultures();
     }
