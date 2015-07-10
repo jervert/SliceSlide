@@ -103,9 +103,9 @@
           $.each(self.el.slides, function (index, slideObject) {
             var slide = $(slideObject);
             self.addAriaAttributes(slide);
-            slide.on('keydown', function (event) {
-              if (event.keyCode === self.keys.left || event.keyCode === self.keys.up) {
-                event.preventDefault();
+            slide.on('keydown', function (ev) {
+              if (ev.keyCode === self.keys.left || ev.keyCode === self.keys.up) {
+                ev.preventDefault();
                 self.pauseSlide();
                 if (slide.prev(op.slidesBoxSlideActive).length > 0) {
                   slide.prev(op.slidesBoxSlideActive).focus();
@@ -114,8 +114,8 @@
                 }
               }
 
-              if (event.keyCode === self.keys.right || event.keyCode === self.keys.down) {
-                event.preventDefault();
+              if (ev.keyCode === self.keys.right || ev.keyCode === self.keys.down) {
+                ev.preventDefault();
                 self.pauseSlide();
                 if (slide.next(op.slidesBoxSlideActive).length > 0) {
                   slide.next(op.slidesBoxSlideActive).focus();
@@ -128,22 +128,22 @@
         },
 
         ariaControlsFixed: function () {
-          self.el.fixedLinks.on('keydown', function (event) {
+          self.el.fixedLinks.on('keydown', function (ev) {
             var controlContainer = $(this).closest(op.slidesBoxControlsFixed),
               controlContainerPrev = controlContainer.prev(op.slidesBoxControlsFixed),
               controlContainerNext = controlContainer.next(op.slidesBoxControlsFixed),
               controlContainerSiblings = controlContainer.siblings(op.slidesBoxControlsFixed);
 
-            if (event.shiftKey && event.keyCode === self.keys.tab) {
-              event.preventDefault();
+            if (ev.shiftKey && ev.keyCode === self.keys.tab) {
+              ev.preventDefault();
               self.el.slideControlsBox.find(op.slidesBoxControlsPrevAndNext).first().find(op.links).first().focus();
-            } else if (!event.shiftKey && event.keyCode === self.keys.tab) {
-              event.preventDefault();
+            } else if (!ev.shiftKey && ev.keyCode === self.keys.tab) {
+              ev.preventDefault();
               self.el.slides.filter('[aria-selected="true"]').first().focus();
             }
 
-            if (event.keyCode === self.keys.left || event.keyCode === self.keys.up) {
-              event.preventDefault();
+            if (ev.keyCode === self.keys.left || ev.keyCode === self.keys.up) {
+              ev.preventDefault();
               if (controlContainerPrev.length > 0) {
                 controlContainerPrev.find(op.links).first().focus();
               } else {
@@ -151,8 +151,8 @@
               }
             }
 
-            if (event.keyCode === self.keys.right || event.keyCode === self.keys.down) {
-              event.preventDefault();
+            if (ev.keyCode === self.keys.right || ev.keyCode === self.keys.down) {
+              ev.preventDefault();
               if (controlContainerNext.length > 0) {
                 controlContainerNext.find(op.links).first().focus();
               } else {
@@ -303,8 +303,8 @@
         },
 
         eventControlsPauseResume: function () {
-          self.el.slideControls.pauseResume.bind('click', function (event) {
-            event.preventDefault();
+          self.el.slideControls.pauseResume.bind('click', function (ev) {
+            ev.preventDefault();
             if (self.el.slideControls.pauseResume.find(op.slidesBoxControlsStatePlaying).length > 0) {
               self.pauseSlide();
             } else {
