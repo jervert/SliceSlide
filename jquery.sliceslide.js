@@ -1,7 +1,7 @@
 ﻿/*
  * SliceSlide - jQuery and Underscore plugin for slideshows
  *
- * Copyright (c) 2012 Antonio Rodriguez Ruiz
+ * Copyright (c) 2015 Antonio Rodriguez Ruiz
  *
  * Licensed under the MIT license:
  *   http://www.opensource.org/licenses/mit-license.php
@@ -9,7 +9,7 @@
  * Project home:
  *   http://outbook.es
  *
- * Version:  4.1.1
+ * Version:  4.2.0
  *
  */
 
