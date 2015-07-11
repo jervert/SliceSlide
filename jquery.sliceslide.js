@@ -79,10 +79,14 @@
           self.el.idSlideBox = self.getSlidesBoxId();
           self.el.slidesBox.attr('id', self.el.idSlideBox);
           self.setTemplateSettings();
-          self.ariaSlideBox();
-          self.ariaSlides();
+          self.initAria();
           self.setSlides(); // Activate initial slides, and hide all other
           self.controls(); // Play-Pause and slide number controls
+        },
+
+        initAria: function () {
+          self.ariaSlideBox();
+          self.ariaSlides();
         },
 
         setTemplateSettings: function () {
@@ -269,7 +273,7 @@
           var slideControlsEvent = 'click.sliceControls',
             controlPrevious = self.el.slideControls.previous,
             controlNext = self.el.slideControls.next;
-          if ($.isTouchCapable()) {
+          if (_.isFunction($.isTouchCapable) && $.isTouchCapable()) {
             self.el.slides.off('swipe.slides').on('swipe.slides', function (ev, touch) {
               if (touch.direction === 'right' && self.isVisible(controlPrevious)) {
                 self.launchChangeSlide(ev, -1);
