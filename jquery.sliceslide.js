@@ -273,6 +273,16 @@
           var slideControlsEvent = 'click.sliceControls',
             controlPrevious = self.el.slideControls.previous,
             controlNext = self.el.slideControls.next;
+          self.touchControls(controlPrevious, controlNext);
+          controlPrevious.off(slideControlsEvent).on(slideControlsEvent, function (ev) {
+            self.launchChangeSlide(ev, -1);
+          });
+          controlNext.off(slideControlsEvent).on(slideControlsEvent, function (ev) {
+            self.launchChangeSlide(ev, 1);
+          });
+        },
+
+        touchControls: function (controlPrevious, controlNext) {
           if (_.isFunction($.isTouchCapable) && $.isTouchCapable()) {
             self.el.slides.off('swipe.slides').on('swipe.slides', function (ev, touch) {
               if (touch.direction === 'right' && self.isVisible(controlPrevious)) {
@@ -282,12 +292,6 @@
               }
             });
           }
-          controlPrevious.off(slideControlsEvent).on(slideControlsEvent, function (ev) {
-            self.launchChangeSlide(ev, -1);
-          });
-          controlNext.off(slideControlsEvent).on(slideControlsEvent, function (ev) {
-            self.launchChangeSlide(ev, 1);
-          });
         },
 
         launchChangeSlide: function (ev, direction) {
