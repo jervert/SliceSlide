@@ -46,6 +46,7 @@
       effectTime: 150,
       autoStart: true,
       loop: true,
+      controlsAdditionOrder: 'prepend',
       templatesUrl: 'jquery.sliceslide.templates.html',
       templatesCultureUrl: 'sliceslide_cultures/jquery.sliceslide.##CULTURE##.json',
       idSliceSlideTemplates: 'jquery-slice-slide-templates',
@@ -219,7 +220,7 @@
             pagesNumber = Math.ceil(pagesNumberRaw),
             thumbnails = (self.op.thumbnailsInControls === true) ? self.getThumbnailsRoutes() : null;
 
-          self.el.slidesBox.prepend(self.tmpl(self.op.templatesControls, {id: self.el.idSlideBox, slides: self.el.slides, pagesNumber: pagesNumber, numberSimultaneousSlides: self.op.numberSimultaneousSlides, text: self.culture, root: self.op.root, thumbnails: thumbnails}));
+          self.el.slidesBox[op.controlsAdditionOrder](self.tmpl(self.op.templatesControls, {id: self.el.idSlideBox, slides: self.el.slides, pagesNumber: pagesNumber, numberSimultaneousSlides: self.op.numberSimultaneousSlides, text: self.culture, root: self.op.root, thumbnails: thumbnails}));
           self.startSlide();
         },
 
@@ -447,8 +448,10 @@
           selectedCulture = op.fallbackCultureJson;
         }
         initSliceSlides(selectedCulture);
-      } else {
+      } else if (!_.isNull(op.templatesCultureUrl)) {
         getCulturesJson();
+      } else {
+        initSliceSlides(null);
       }
     }
 
