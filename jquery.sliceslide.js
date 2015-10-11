@@ -9,7 +9,7 @@
  * Project home:
  *   http://outbook.es
  *
- * Version:  4.2.0
+ * Version:  4.2.1
  *
  */
 
@@ -185,8 +185,8 @@
         },
 
         tmpl: function (id, context) {
-          var html = $(id).html();
-          return _.template(html, context);
+          var html = _.template($(id).html());
+          return html(context);
         },
 
         setSlides: function () {
